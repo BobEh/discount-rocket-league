@@ -24,6 +24,26 @@ nPhysics::cPlaneComponent::~cPlaneComponent()
 	delete mBody;
 }
 
+void nPhysics::cPlaneComponent::GetScale(float& scaleOut)
+{
+
+}
+
+size_t nPhysics::cPlaneComponent::NumNodes()
+{
+	return 0;
+}
+
+bool nPhysics::cPlaneComponent::GetNodeRadius(size_t index, float& radiusOut)
+{
+	return false;
+}
+
+bool nPhysics::cPlaneComponent::GetNodePosition(size_t index, glm::vec3& positionOut)
+{
+	return false;
+}
+
 void nPhysics::cPlaneComponent::GetTransform(glm::mat4& transformOut)
 {
 	btTransform transform;

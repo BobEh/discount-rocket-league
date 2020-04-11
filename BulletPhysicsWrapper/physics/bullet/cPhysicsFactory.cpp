@@ -30,4 +30,8 @@ namespace nPhysics
 
 		/*return nullptr;*/
 	}
+	iClothComponent* cPhysicsFactory::CreateCloth(const sClothDef& def)
+	{
+		return nullptr;
+	}
 }

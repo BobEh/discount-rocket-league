@@ -15,8 +15,10 @@ bool drawSpace = false;
 renderTag currentRender;
 
 // physics stuff
-nPhysics::iPhysicsFactory* physicsFactory;
-nPhysics::iPhysicsWorld* physicsWorld;
+//nPhysics::iPhysicsFactory* myPhysicsFactory;
+//nPhysics::iPhysicsWorld* myPhysicsWorld;
+nPhysics::iPhysicsFactory* bulletPhysicsFactory;
+nPhysics::iPhysicsWorld* bulletPhysicsWorld;
 cPhysics* pAIPhsyics;
 cPhysics* pPlatformPhysics;
 

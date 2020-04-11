@@ -36,6 +36,26 @@ nPhysics::cBallComponent::~cBallComponent()
 	mBody = 0;
 }
 
+void nPhysics::cBallComponent::GetScale(float& scaleOut)
+{
+
+}
+
+size_t nPhysics::cBallComponent::NumNodes()
+{
+	return 0;
+}
+
+bool nPhysics::cBallComponent::GetNodeRadius(size_t index, float& radiusOut)
+{
+	return false;
+}
+
+bool nPhysics::cBallComponent::GetNodePosition(size_t index, glm::vec3& positionOut)
+{
+	return false;
+}
+
 void nPhysics::cBallComponent::GetTransform(glm::mat4& transformOut)
 {
 	btTransform transform;

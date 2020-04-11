@@ -1171,7 +1171,7 @@ void DrawPlatform()
 
 void DrawSecondPass()
 {
-	iObject* pMainCharacter = pFindObjectByFriendlyName("mainCharacter");
+	iObject* pMainCharacter = pFindObjectByFriendlyName("physicsSphere");
 	std::string currentAnimationName = "Idle";
 	if (pMainCharacter)
 	{
@@ -1250,7 +1250,8 @@ void DrawSecondPass()
 		}
 	}
 
-	physicsWorld->Update(deltaTime);
+	//myPhysicsWorld->Update(deltaTime);
+	bulletPhysicsWorld->Update(deltaTime);
 	gCoordinator->update(deltaTime);
 	gAIManager->update(deltaTime);
 
