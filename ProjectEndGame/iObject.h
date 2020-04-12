@@ -32,6 +32,11 @@ public:
 	virtual void SetComponent(nPhysics::iPhysicsComponent*) = 0;
 	virtual nPhysics::iPhysicsComponent* GetComponent() = 0;
 
+	virtual void SetUniqueEntityId(int id) = 0;
+	virtual int GetUniqueEntityId() = 0;
+
+	virtual bool IsCollidingWith(int uniqueEntityId) = 0;
+
 	//getters
 	virtual std::string getAnimation() = 0;
 	virtual std::string getBehaviour() = 0;

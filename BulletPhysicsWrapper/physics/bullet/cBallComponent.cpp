@@ -23,7 +23,7 @@ nPhysics::cBallComponent::cBallComponent(nPhysics::sBallDef theBallDef)
 	//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(transform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, shape, localInertia);
-	rbInfo.m_restitution = 1.0f;
+	rbInfo.m_restitution = 0.8f;
 	mBody = new btRigidBody(rbInfo);
 	mBody->setUserPointer(this);
 }
@@ -36,9 +36,14 @@ nPhysics::cBallComponent::~cBallComponent()
 	mBody = 0;
 }
 
+bool nPhysics::cBallComponent::IsCollidingWith(int uniqueEntityId)
+{
+	return false;
+}
+
 void nPhysics::cBallComponent::GetScale(float& scaleOut)
 {
-
+	
 }
 
 size_t nPhysics::cBallComponent::NumNodes()
@@ -101,4 +106,13 @@ void nPhysics::cBallComponent::SetMassType(int physicsType)
 std::string nPhysics::cBallComponent::GetPlaneType()
 {
 	return planeType;
+}
+
+void nPhysics::cBallComponent::SetUniqueEntityId(int id)
+{
+}
+
+int nPhysics::cBallComponent::GetUniqueEntityId()
+{
+	return 0;
 }

@@ -14,9 +14,14 @@ namespace nPhysics
 		~cPlaneComponent();
 		cPlaneComponent(nPhysics::sPlaneDef thePlaneDef);
 
+		virtual bool IsCollidingWith(int uniqueEntityId);
+
 		virtual size_t NumNodes();
 		virtual bool GetNodeRadius(size_t index, float& radiusOut);
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut);
+
+		virtual void SetUniqueEntityId(int id);
+		virtual int GetUniqueEntityId();
 
 		virtual void GetTransform(glm::mat4& transformOut);
 		virtual void GetPosition(glm::vec3& positionOut);

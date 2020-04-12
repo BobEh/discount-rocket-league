@@ -1172,6 +1172,11 @@ void DrawPlatform()
 void DrawSecondPass()
 {
 	iObject* pMainCharacter = pFindObjectByFriendlyName("physicsSphere");
+	iObject* pHomeNet = pFindObjectByFriendlyName("homeNet");
+	if (pHomeNet && pHomeNet->IsCollidingWith(pMainCharacter->getUniqueID()))
+	{
+		bool iAmCollidingRightNowBro = true;
+	}
 	std::string currentAnimationName = "Idle";
 	if (pMainCharacter)
 	{
@@ -1286,7 +1291,7 @@ void DrawSecondPass()
 		// Move the camera
 		// Maybe set it to orthographic, etc.
 		glm::mat4 matAIQuad = glm::mat4(1.0f);
-		DrawObject(matAIQuad, pAIQuad, shaderProgID, pTheVAOManager);
+		//DrawObject(matAIQuad, pAIQuad, shaderProgID, pTheVAOManager);
 	}
 
 	// 3. Use the FBO colour texture as the texture on that quad.
@@ -1313,7 +1318,7 @@ void DrawSecondPass()
 		// Move the camera
 		// Maybe set it to orthographic, etc.
 		glm::mat4 matPlatformQuad = glm::mat4(1.0f);
-		DrawObject(matPlatformQuad, pPlatformQuad, shaderProgID, pTheVAOManager);
+		//DrawObject(matPlatformQuad, pPlatformQuad, shaderProgID, pTheVAOManager);
 	}
 
 	// set pass number back to 0 to render the rest of the scene

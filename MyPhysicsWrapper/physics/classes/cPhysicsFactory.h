@@ -15,5 +15,7 @@ namespace nPhysics
 		virtual iBallComponent* CreateBall(const sBallDef& def);
 		virtual iPlaneComponent* CreatePlane(const sPlaneDef& def);
 		virtual iClothComponent* CreateCloth(const sClothDef& def);
+		virtual iHingeComponent* CreateHinge(const sHingeDef& def);
+		virtual iGhostBoxComponent* CreateGhostBox(const sGhostBoxDef& def);
 	};
 }

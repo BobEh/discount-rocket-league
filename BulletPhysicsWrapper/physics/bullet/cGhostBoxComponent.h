@@ -1,16 +1,17 @@
 #pragma once
-#include <physics/interfaces/iBallComponent.h>
-#include "cPhysicsComponent.h"
-#include <string>
 #include "btBulletDynamicsCommon.h"
+#include <physics/interfaces/iGhostBoxComponent.h>
+#include "BulletCollision/CollisionDispatch/btGhostObject.h"
+#include "nConvert.h"
 
 namespace nPhysics
 {
-	class cBallComponent : public iBallComponent
+	class cGhostBoxComponent : public iGhostBoxComponent
 	{
+		friend class cPhysicsWorld;
 	public:
-		cBallComponent(nPhysics::sBallDef theBallDef);
-		~cBallComponent();
+		cGhostBoxComponent(const sGhostBoxDef& def);
+		virtual ~cGhostBoxComponent();
 
 		virtual bool IsCollidingWith(int uniqueEntityId);
 
@@ -31,13 +32,11 @@ namespace nPhysics
 		virtual bool GetNodeRadius(size_t index, float& radiusOut);
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut);
 
-		btRigidBody* mBody;
 	private:
-		
-		//glm::mat4 transform;
-		glm::vec3 position;
-		glm::vec3 velocity;
-		std::string planeType;
-		int _physicsType;
+		btPairCachingGhostObject* mGhostObject;
+
+		cGhostBoxComponent() = delete;
+		cGhostBoxComponent(const cGhostBoxComponent& other) = delete;
+		cGhostBoxComponent& operator=(const cGhostBoxComponent& other) = delete;
 	};
 }

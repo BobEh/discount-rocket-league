@@ -124,6 +124,7 @@ float cSphereObject::getScale()
 		scale = _scale;
 		LeaveCriticalSection(&object_lock);
 	}
+	scale = _scale;
 	return scale;
 }
 glm::mat4 cSphereObject::getMatWorld()
@@ -498,6 +499,31 @@ nPhysics::iPhysicsComponent* cSphereObject::GetComponent()
 	nPhysics::iPhysicsComponent* result = this->_component;
 	LeaveCriticalSection(&object_lock);
 	return result;
+}
+
+void cSphereObject::SetUniqueEntityId(int id)
+{
+	if (this->_component)
+	{
+		this->_component->SetUniqueEntityId(id);
+	}
+}
+
+int cSphereObject::GetUniqueEntityId()
+{
+	if (this->_component)
+	{
+		return this->_component->GetUniqueEntityId();
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+bool cSphereObject::IsCollidingWith(int uniqueEntityId)
+{
+	return this->_component->IsCollidingWith(uniqueEntityId);
 }
 
 cSphereObject::cSphereObject(nPhysics::eComponentType componentType)

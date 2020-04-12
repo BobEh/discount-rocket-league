@@ -35,4 +35,12 @@ namespace nPhysics
 
 		return new cClothComponent(def);
 	}
+	iHingeComponent* cPhysicsFactory::CreateHinge(const sHingeDef& def)
+	{
+		return nullptr;
+	}
+	iGhostBoxComponent* cPhysicsFactory::CreateGhostBox(const sGhostBoxDef& def)
+	{
+		return nullptr;
+	}
 }

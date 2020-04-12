@@ -7,6 +7,7 @@ namespace nPhysics
 		delete mCollisionConfiguration;
 		delete mDispatcher;
 		delete mOverlappingPairCache;
+		delete mGhostPairCallback;
 		delete mSolver;
 		delete mDynamicsWorld;
 		if (collisionListener)
@@ -26,13 +27,15 @@ namespace nPhysics
 
 		///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
 		mOverlappingPairCache = new btDbvtBroadphase();
+		mGhostPairCallback = new btGhostPairCallback();
+		mOverlappingPairCache->getOverlappingPairCache()->setInternalGhostPairCallback(mGhostPairCallback);
 
 		///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
 		mSolver = new btSequentialImpulseConstraintSolver;
 
 		mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfiguration);
 
-		mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+		mDynamicsWorld->setGravity(btVector3(0, -20, 0));
 	}
 	void cPhysicsWorld::Update(float deltaTime)
 	{
@@ -55,6 +58,10 @@ namespace nPhysics
 			return  AddRigidBodies(dynamic_cast<cBallComponent*>(component));
 		case eComponentType::plane:
 			return AddRigidBodies(dynamic_cast<cPlaneComponent*>(component));
+		case eComponentType::hinge:
+			return AddRigidBodies(dynamic_cast<cHingeComponent*>(component));
+		case eComponentType::ghostBox:
+			return AddRigidBodies(dynamic_cast<cGhostBoxComponent*>(component));
 		default:
 			break;
 		}
@@ -62,34 +69,20 @@ namespace nPhysics
 	}
 	bool cPhysicsWorld::RemoveComponent(iPhysicsComponent* component)
 	{
-		//// find the component
-		//for (int i = 0; i < this->componentVec.size(); i++)
-		//{
-		//	if (this->componentVec.at(i) == component)
-		//	{
-		//		this->componentVec.erase(componentVec.begin(), componentVec.begin()+i);
-		//		return true;
-		//	}
-		//}
-		//// it wasn't the to begin with
-		//return false;
 		if (!component)
 		{
 			return false;
 		}
-		//for (int i = 0; i < this->componentVec.size(); i++)
-		//{
-		//	if (this->componentVec.at(i) == component)
-		//	{
-		//		return false;
-		//	}
-		//}
 		switch (component->GetComponentType())
 		{
 		case eComponentType::ball:
 			return RemoveRigidBodies(dynamic_cast<cBallComponent*>(component));
 		case eComponentType::plane:
 			return RemoveRigidBodies(dynamic_cast<cPlaneComponent*>(component));
+		case eComponentType::hinge:
+			return RemoveRigidBodies(dynamic_cast<cHingeComponent*>(component));
+		case eComponentType::ghostBox:
+			return RemoveRigidBodies(dynamic_cast<cGhostBoxComponent*>(component));
 		default:
 			break;
 		}
@@ -126,6 +119,25 @@ namespace nPhysics
 		mDynamicsWorld->addRigidBody(component->mBody);
 		return true;
 	}
+	bool cPhysicsWorld::AddRigidBodies(cHingeComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->addRigidBody(component->mBody);
+		mDynamicsWorld->addConstraint(component->mConstraint);
+		return true;
+	}
+	bool cPhysicsWorld::AddRigidBodies(cGhostBoxComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->addCollisionObject(component->mGhostObject);
+		return true;
+	}
 	bool cPhysicsWorld::RemoveRigidBodies(cBallComponent* component)
 	{
 		if (!component)
@@ -144,20 +156,23 @@ namespace nPhysics
 		mDynamicsWorld->removeRigidBody(component->mBody);
 		return true;
 	}
-	//void cPhysicsWorld::SetGravity(glm::vec3 gravity)
-	//{
-	//	mWorld->SetGravity(gravity);
-	//}
-	//std::vector<nPhysics::iPhysicsComponent*> cPhysicsWorld::GetComponentVec()
-	//{
-	//	return this->componentVec;
-	//}
-	//std::vector<phys::cRigidBody*> cPhysicsWorld::GetWorldBodiesVec()
-	//{
-	//	return mWorld->GetBodies();
-	//}
-	//phys::cWorld* cPhysicsWorld::GetWorld()
-	//{
-	//	return mWorld;
-	//}
+	bool cPhysicsWorld::RemoveRigidBodies(cHingeComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->removeRigidBody(component->mBody);
+		mDynamicsWorld->removeConstraint(component->mConstraint);
+		return true;
+	}
+	bool cPhysicsWorld::RemoveRigidBodies(cGhostBoxComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->removeCollisionObject(component->mGhostObject);
+		return true;
+	}
 }

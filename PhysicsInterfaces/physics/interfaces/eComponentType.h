@@ -6,6 +6,8 @@ namespace nPhysics
 	{
 		ball,
 		plane,
-		cloth
+		cloth,
+		hinge,
+		ghostBox
 	};
 }

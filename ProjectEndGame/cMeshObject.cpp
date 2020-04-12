@@ -360,6 +360,31 @@ nPhysics::iPhysicsComponent* cMeshObject::GetComponent()
 	return this->_component;
 }
 
+void cMeshObject::SetUniqueEntityId(int id)
+{
+	if (this->_component)
+	{
+		this->_component->SetUniqueEntityId(id);
+	}
+}
+
+int cMeshObject::GetUniqueEntityId()
+{
+	if (this->_component)
+	{
+		return this->_component->GetUniqueEntityId();
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+bool cMeshObject::IsCollidingWith(int uniqueEntityId)
+{
+	return this->_component->IsCollidingWith(uniqueEntityId);
+}
+
 cMeshObject::cMeshObject(nPhysics::eComponentType componentType)
 {
 	this->_scale = 0.0f;

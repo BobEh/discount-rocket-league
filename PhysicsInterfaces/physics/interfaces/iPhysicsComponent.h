@@ -18,6 +18,8 @@ namespace nPhysics
 		//virtual int GetMassType() = 0;
 		//virtual void SetMassType(int physicsType) = 0;
 
+		virtual bool IsCollidingWith(int uniqueEntityId) = 0;
+
 		virtual void ApplyForce(const glm::vec3& force) = 0;
 
 		virtual void GetTransform(glm::mat4& transformOut) = 0;
@@ -30,6 +32,9 @@ namespace nPhysics
 		virtual size_t NumNodes() = 0;
 		virtual bool GetNodeRadius(size_t index, float& radiusOut) = 0;
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut) = 0;
+
+		virtual void SetUniqueEntityId(int id) = 0;
+		virtual int GetUniqueEntityId() = 0;
 
 		//virtual std::string GetPlaneType() = 0;
 	

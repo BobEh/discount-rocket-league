@@ -1,5 +1,7 @@
 #include "cPhysicsFactory.h"
 #include "cPlaneComponent.h"
+#include "cHingeComponent.h"
+#include "cGhostBoxComponent.h"
 
 namespace nPhysics
 {
@@ -33,5 +35,13 @@ namespace nPhysics
 	iClothComponent* cPhysicsFactory::CreateCloth(const sClothDef& def)
 	{
 		return nullptr;
+	}
+	iHingeComponent* cPhysicsFactory::CreateHinge(const sHingeDef& def)
+	{
+		return new cHingeComponent(def);
+	}
+	iGhostBoxComponent* cPhysicsFactory::CreateGhostBox(const sGhostBoxDef& def)
+	{
+		return new cGhostBoxComponent(def);
 	}
 }

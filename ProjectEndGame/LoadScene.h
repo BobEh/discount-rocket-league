@@ -180,6 +180,9 @@ int LoadMeshes()
 	cMesh cubeMesh;
 	pTheModelLoader->LoadPlyModel("assets/models/Cube_1_Unit_from_origin_XYZ_uv.ply", cubeMesh);
 
+	cMesh smallCubeMesh;
+	pTheModelLoader->LoadPlyModel("assets/models/Cube_size1.ply", smallCubeMesh);
+
 	cMesh cubeMeshDebug;
 	if (!pTheModelLoader->LoadPlyModel("assets/models/Cube_debug.ply", cubeMeshDebug))
 	{
@@ -191,6 +194,12 @@ int LoadMeshes()
 
 	cMesh sphereMesh;
 	pTheModelLoader->LoadPlyModel("assets/models/Sphere_Radius_1_XYZ_n_uv.ply", sphereMesh);
+
+	cMesh hingeMesh;
+	if (!pTheModelLoader->LoadPlyModel("assets/models/Hinge_Block.ply", hingeMesh))
+	{
+		std::cout << "Error: couldn't find the hinge block ply file." << std::endl;
+	}
 
 	cShaderManager* pTheShaderManager = new cShaderManager();
 
@@ -231,6 +240,12 @@ int LoadMeshes()
 	pTheVAOManager->LoadModelIntoVAO("cube",
 		cubeMesh,		// Sphere mesh info
 		cubeMeshInfo,
+		shaderProgID);
+
+	sModelDrawInfo smallCubeMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("smallCube",
+		smallCubeMesh,		// Sphere mesh info
+		smallCubeMeshInfo,
 		shaderProgID);
 
 	sModelDrawInfo xWingRMeshInfo;
@@ -293,6 +308,9 @@ int LoadMeshes()
 
 	sModelDrawInfo piece6MeshInfo;
 	pTheVAOManager->LoadModelIntoVAO("piece6", piece6Mesh, piece6MeshInfo, shaderProgID);
+
+	sModelDrawInfo hingeMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("hinge", hingeMesh, hingeMeshInfo, shaderProgID);
 
 }
 
@@ -1347,6 +1365,52 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	::g_vec_pPlatformEnemyObjects.push_back(pEnemy4);
 
 	LoadLevel();
+
+	iObject* pHinge = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
+	pHinge->setMeshName("hinge");
+	pHinge->setFriendlyName("enemy4");	// We use to search 
+	pHinge->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	pHinge->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	pHinge->setScale(1.0f);
+	pHinge->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	pHinge->setInverseMass(1.0f);
+	pHinge->setIsVisible(true);
+	pHinge->setIsWireframe(false);
+	pHinge->setTexture("green.bmp", 1);
+	pHinge->setTextureRatio(1, 1);
+	pHinge->setTransprancyValue(1.0f);
+	nPhysics::sHingeDef physicsHinge;
+	physicsHinge.Mass = 1.0f;
+	physicsHinge.Position = glm::vec3(0.0f, 3.0f, 0.0f);
+	physicsHinge.Height = 5.0f;
+	physicsHinge.Width = 10.0f;
+	physicsHinge.Thickness = 1.0f;
+	nPhysics::iHingeComponent* pHingePhysics = bulletPhysicsFactory->CreateHinge(physicsHinge);
+	g_vec_pGameComponentObjects.push_back(pHingePhysics);
+	pHinge->SetComponent(pHingePhysics);
+	g_vec_pGameObjects.push_back(pHinge);
+	bulletPhysicsWorld->AddComponent(pHinge->GetComponent());
+
+	iObject* pHomeNet = pFactory->CreateObject("sphere", nPhysics::eComponentType::ghostBox);
+	pHomeNet->setMeshName("smallCube");
+	pHomeNet->setFriendlyName("homeNet");	// We use to search 
+	pHomeNet->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	pHomeNet->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	float scale = 20.0f;
+	pHomeNet->setScale(scale);
+	pHomeNet->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	pHomeNet->setInverseMass(1.0f);
+	pHomeNet->setIsVisible(true);
+	pHomeNet->setIsWireframe(true);
+	nPhysics::sGhostBoxDef physicsGhostBox;
+	physicsGhostBox.Position = glm::vec3(0.0f, 0.0f, 0.0f);
+	physicsGhostBox.Width = glm::vec3(scale);
+	nPhysics::iGhostBoxComponent* pGhostBoxPhysics = bulletPhysicsFactory->CreateGhostBox(physicsGhostBox);
+	g_vec_pGameComponentObjects.push_back(pGhostBoxPhysics);
+	pHomeNet->SetComponent(pGhostBoxPhysics);
+	pHomeNet->SetUniqueEntityId(1);
+	g_vec_pGameObjects.push_back(pHomeNet);
+	bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
 
 	pCurrentObject = pFindObjectByFriendlyName("mainCharacter");
 

@@ -75,8 +75,21 @@ namespace nPhysics
 			mBody = 0;
 		}
 	}
+
+	bool nPhysics::cClothComponent::IsCollidingWith(int uniqueEntityId)
+	{
+		return false;
+	}
+
 	void cClothComponent::ApplyForce(const glm::vec3& force)
 	{
+	}
+	void cClothComponent::SetUniqueEntityId(int id)
+	{
+	}
+	int cClothComponent::GetUniqueEntityId()
+	{
+		return 0;
 	}
 	void cClothComponent::GetTransform(glm::mat4& transformOut)
 	{

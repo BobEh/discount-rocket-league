@@ -14,6 +14,11 @@ void nPhysics::cBallComponent::GetPosition(glm::vec3& positionOut)
 	mBody->GetPosition(positionOut);
 }
 
+bool nPhysics::cBallComponent::IsCollidingWith(int uniqueEntityId)
+{
+	return false;
+}
+
 void nPhysics::cBallComponent::SetPosition(glm::vec3 positionIn)
 {
 	mBody->SetPosition(positionIn);
@@ -78,3 +83,13 @@ nPhysics::cBallComponent::cBallComponent(nPhysics::sBallDef theBallDef)
 	mBody = new phys::cRigidBody(physDef, shape);
 	
 }
+
+void nPhysics::cBallComponent::SetUniqueEntityId(int id)
+{
+}
+
+int nPhysics::cBallComponent::GetUniqueEntityId()
+{
+	return 0;
+}
+

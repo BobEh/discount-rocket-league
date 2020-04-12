@@ -12,8 +12,10 @@ namespace nPhysics
 		~cPhysicsFactory();
 		iPhysicsWorld* CreateWorld();
 		// components
-		iBallComponent* CreateBall(const sBallDef& def);
-		iPlaneComponent* CreatePlane(const sPlaneDef& def);
-		iClothComponent* CreateCloth(const sClothDef& def);
+		virtual iBallComponent* CreateBall(const sBallDef& def);
+		virtual iPlaneComponent* CreatePlane(const sPlaneDef& def);
+		virtual iClothComponent* CreateCloth(const sClothDef& def);
+		virtual iHingeComponent* CreateHinge(const sHingeDef& def);
+		virtual iGhostBoxComponent* CreateGhostBox(const sGhostBoxDef& def);
 	};
 }

@@ -24,6 +24,11 @@ nPhysics::cPlaneComponent::~cPlaneComponent()
 	delete mBody;
 }
 
+bool nPhysics::cPlaneComponent::IsCollidingWith(int uniqueEntityId)
+{
+	return false;
+}
+
 void nPhysics::cPlaneComponent::GetScale(float& scaleOut)
 {
 
@@ -79,6 +84,15 @@ void nPhysics::cPlaneComponent::SetMassType(int physicsType)
 std::string nPhysics::cPlaneComponent::GetPlaneType()
 {
 	return planeType;
+}
+
+void nPhysics::cPlaneComponent::SetUniqueEntityId(int id)
+{
+}
+
+int nPhysics::cPlaneComponent::GetUniqueEntityId()
+{
+	return 0;
 }
 
 void nPhysics::cPlaneComponent::ApplyForce(const glm::vec3& force)

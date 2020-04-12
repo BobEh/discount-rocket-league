@@ -14,7 +14,12 @@ namespace nPhysics
 		cClothComponent(const sClothDef& theClothDef);
 		~cClothComponent();
 
+		virtual bool IsCollidingWith(int uniqueEntityId);
+
 		virtual void ApplyForce(const glm::vec3& force);
+
+		virtual void SetUniqueEntityId(int id);
+		virtual int GetUniqueEntityId();
 
 		virtual void GetTransform(glm::mat4& transformOut);
 		virtual size_t NumNodes();

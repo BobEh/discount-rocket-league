@@ -14,6 +14,11 @@ void nPhysics::cPlaneComponent::GetPosition(glm::vec3& positionOut)
 	mBody->GetPosition(positionOut);
 }
 
+bool nPhysics::cPlaneComponent::IsCollidingWith(int uniqueEntityId)
+{
+	return false;
+}
+
 void nPhysics::cPlaneComponent::SetPosition(glm::vec3 positionIn)
 {
 	position = positionIn;
@@ -75,4 +80,13 @@ bool nPhysics::cPlaneComponent::GetNodeRadius(size_t index, float& radiusOut)
 bool nPhysics::cPlaneComponent::GetNodePosition(size_t index, glm::vec3& positionOut)
 {
 	return false;
+}
+
+void nPhysics::cPlaneComponent::SetUniqueEntityId(int id)
+{
+}
+
+int nPhysics::cPlaneComponent::GetUniqueEntityId()
+{
+	return 0;
 }

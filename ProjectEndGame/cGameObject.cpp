@@ -282,6 +282,31 @@ nPhysics::iPhysicsComponent* cGameObject::GetComponent()
 	return this->_component;
 }
 
+void cGameObject::SetUniqueEntityId(int id)
+{
+	if (this->_component)
+	{
+		this->_component->SetUniqueEntityId(id);
+	}
+}
+
+int cGameObject::GetUniqueEntityId()
+{
+	if (this->_component)
+	{
+		return this->_component->GetUniqueEntityId();
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+bool cGameObject::IsCollidingWith(int uniqueEntityId)
+{
+	return this->_component->IsCollidingWith(uniqueEntityId);
+}
+
 int cGameObject::GetMassType()
 {
 	return -_physicsType;

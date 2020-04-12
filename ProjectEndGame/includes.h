@@ -53,6 +53,8 @@
 #include <physics/interfaces/iPhysicsWorld.h>
 #include <physics/interfaces/iPlaneComponent2.h>
 #include <physics/interfaces/iClothComponent.h>
+#include <physics/interfaces/iHingeComponent.h>
+#include <physics/interfaces/iGhostBoxComponent.h>
 
 //Animation
 #include "cSimpleAssimpSkinnedMeshLoader_OneMesh.h"

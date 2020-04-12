@@ -327,6 +327,20 @@ nPhysics::iPhysicsComponent* cClothObject::GetComponent()
 	return this->_component;
 }
 
+void cClothObject::SetUniqueEntityId(int id)
+{
+}
+
+int cClothObject::GetUniqueEntityId()
+{
+	return 0;
+}
+
+bool cClothObject::IsCollidingWith(int uniqueEntityId)
+{
+	return false;
+}
+
 cClothObject::cClothObject(nPhysics::eComponentType componentType)
 {
 	this->_scale = 0.0f;

@@ -34,6 +34,10 @@ public:
 	virtual void SetComponent(nPhysics::iPhysicsComponent* component);
 	virtual nPhysics::iPhysicsComponent* GetComponent();
 
+	virtual void SetUniqueEntityId(int id);
+	virtual int GetUniqueEntityId();
+	virtual bool IsCollidingWith(int uniqueEntityId);
+
 	nPhysics::eComponentType mComponentType;
 
 	cMeshObject(nPhysics::eComponentType componentType);

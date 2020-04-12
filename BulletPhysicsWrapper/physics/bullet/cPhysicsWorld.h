@@ -2,9 +2,12 @@
 #include <physics/interfaces/iPhysicsWorld.h>
 #include <physics/interfaces/iCollisionListener.h>
 #include "btBulletDynamicsCommon.h"
+#include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #include <vector>
 #include <cBallComponent.h>
 #include <cPlaneComponent.h>
+#include "cHingeComponent.h"
+#include "cGhostBoxComponent.h"
 
 namespace nPhysics
 {
@@ -27,11 +30,16 @@ namespace nPhysics
 	private:
 		bool AddRigidBodies(cBallComponent* component);
 		bool AddRigidBodies(cPlaneComponent* component);
+		bool AddRigidBodies(cHingeComponent* component);
+		bool AddRigidBodies(cGhostBoxComponent* component);
 		bool RemoveRigidBodies(cBallComponent* component);
 		bool RemoveRigidBodies(cPlaneComponent* component);
+		bool RemoveRigidBodies(cHingeComponent* component);
+		bool RemoveRigidBodies(cGhostBoxComponent* component);
 		btDefaultCollisionConfiguration* mCollisionConfiguration;
 		btCollisionDispatcher* mDispatcher;
 		btBroadphaseInterface* mOverlappingPairCache;
+		btGhostPairCallback* mGhostPairCallback;
 		btSequentialImpulseConstraintSolver* mSolver;
 		btDiscreteDynamicsWorld* mDynamicsWorld;
 		//std::vector<nPhysics::iPhysicsComponent*> componentVec;
