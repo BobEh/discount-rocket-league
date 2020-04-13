@@ -38,6 +38,8 @@ public:
 	virtual int GetUniqueEntityId();
 	virtual bool IsCollidingWith(int uniqueEntityId);
 
+	virtual int GetNumWheels();
+
 	nPhysics::eComponentType mComponentType;
 
 	cMeshObject(nPhysics::eComponentType componentType);

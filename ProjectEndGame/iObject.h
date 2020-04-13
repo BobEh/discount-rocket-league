@@ -35,6 +35,8 @@ public:
 	virtual void SetUniqueEntityId(int id) = 0;
 	virtual int GetUniqueEntityId() = 0;
 
+	virtual int GetNumWheels() = 0;
+
 	virtual bool IsCollidingWith(int uniqueEntityId) = 0;
 
 	//getters

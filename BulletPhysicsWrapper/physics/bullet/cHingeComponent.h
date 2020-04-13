@@ -30,6 +30,8 @@ namespace nPhysics
 		virtual bool GetNodeRadius(size_t index, float& radiusOut);
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut);
 
+		virtual int GetNumWheels();
+
 	private:
 		btRigidBody* mBody;
 		btHingeConstraint* mConstraint;

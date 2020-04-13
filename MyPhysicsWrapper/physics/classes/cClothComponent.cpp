@@ -131,4 +131,8 @@ namespace nPhysics
 	{
 		return std::string();
 	}
+	int cClothComponent::GetNumWheels()
+	{
+		return 0;
+	}
 }

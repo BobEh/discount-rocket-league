@@ -341,6 +341,11 @@ bool cClothObject::IsCollidingWith(int uniqueEntityId)
 	return false;
 }
 
+int cClothObject::GetNumWheels()
+{
+	return 0;
+}
+
 cClothObject::cClothObject(nPhysics::eComponentType componentType)
 {
 	this->_scale = 0.0f;

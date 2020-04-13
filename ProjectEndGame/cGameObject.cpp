@@ -307,6 +307,11 @@ bool cGameObject::IsCollidingWith(int uniqueEntityId)
 	return this->_component->IsCollidingWith(uniqueEntityId);
 }
 
+int cGameObject::GetNumWheels()
+{
+	return 0;
+}
+
 int cGameObject::GetMassType()
 {
 	return -_physicsType;

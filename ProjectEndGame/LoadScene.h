@@ -1396,21 +1396,96 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pHomeNet->setFriendlyName("homeNet");	// We use to search 
 	pHomeNet->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 	pHomeNet->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	float scale = 20.0f;
-	pHomeNet->setScale(scale);
+	float scaleNet = 20.0f;
+	pHomeNet->setScale(scaleNet);
 	pHomeNet->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	pHomeNet->setInverseMass(1.0f);
 	pHomeNet->setIsVisible(true);
 	pHomeNet->setIsWireframe(true);
 	nPhysics::sGhostBoxDef physicsGhostBox;
 	physicsGhostBox.Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	physicsGhostBox.Width = glm::vec3(scale);
+	physicsGhostBox.Width = glm::vec3(scaleNet);
 	nPhysics::iGhostBoxComponent* pGhostBoxPhysics = bulletPhysicsFactory->CreateGhostBox(physicsGhostBox);
 	g_vec_pGameComponentObjects.push_back(pGhostBoxPhysics);
 	pHomeNet->SetComponent(pGhostBoxPhysics);
 	pHomeNet->SetUniqueEntityId(1);
 	g_vec_pGameObjects.push_back(pHomeNet);
 	bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
+
+	iObject* pMainCar = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
+	pMainCar->setMeshName("smallCube");
+	pMainCar->setFriendlyName("mainCar");	// We use to search 
+	pMainCar->setPositionXYZ(glm::vec3(0.0f, 3.0f, 0.0f));
+	pMainCar->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	float scaleCar = 6.0f;
+	pMainCar->setScale(scaleCar);
+	pMainCar->setDebugColour(glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
+	pMainCar->setInverseMass(1.0f);
+	pMainCar->setIsVisible(true);
+	pMainCar->setIsWireframe(false);
+	pMainCar->setTexture("green.bmp", 1);
+	pMainCar->setTextureRatio(1, 1);
+	pMainCar->setTransprancyValue(1.0f);
+	g_vec_pCarObjects.push_back(pMainCar);
+	nPhysics::sVehicleDef physicsVehicle;
+	physicsVehicle.Position = glm::vec3(0.0f, 23.0f, 10.0f);
+	physicsVehicle.Width = glm::vec3(scaleCar);
+	physicsVehicle.Mass = 1000.0f;
+	for (int i = 0; i < 4; i++)
+	{
+		iObject* pWheel = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
+		pWheel->setMeshName("sphere");
+		std::string wheelName = "wheel" + (i + 1);
+		pWheel->setFriendlyName(wheelName);	// We use to search 
+		//pWheel->setPositionXYZ(glm::vec3(0.0f, 3.0f, 0.0f));
+		pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+		float scale = 1.0f;
+		pWheel->setScale(scale);
+		pWheel->setDebugColour(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+		pWheel->setInverseMass(1.0f);
+		pWheel->setIsVisible(true);
+		pWheel->setIsWireframe(false);
+		pWheel->setTexture("green.bmp", 1);
+		pWheel->setTextureRatio(1, 1);
+		pWheel->setTransprancyValue(1.0f);
+		nPhysics::sWheelDef physicsWheel;
+		if (i == 0)
+		{
+			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
+			physicsWheel.ConnectionPoint = glm::vec3(-3.9f, 1.0f, -3.5f);			
+			physicsWheel.IsFrontWheel = true;
+			physicsWheel.Radius = 1.5f;
+		}
+		if (i == 1)
+		{
+			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
+			physicsWheel.ConnectionPoint = glm::vec3(3.9f, 1.0f, -3.5f);
+			physicsWheel.IsFrontWheel = true;
+			physicsWheel.Radius = 1.5f;
+		}
+		if (i == 2)
+		{
+			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
+			physicsWheel.ConnectionPoint = glm::vec3(-3.9f, 1.0f, 3.5f);
+			physicsWheel.IsFrontWheel = false;
+			physicsWheel.Radius = 1.5f;
+		}
+		if (i == 3)
+		{
+			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
+			physicsWheel.ConnectionPoint = glm::vec3(3.9f, 1.0f, 3.5f);
+			physicsWheel.IsFrontWheel = false;
+			physicsWheel.Radius = 1.5f;
+		}
+		pWheel->setPositionXYZ(physicsWheel.ConnectionPoint);
+		physicsVehicle.Wheels.push_back(physicsWheel);
+		g_vec_pWheelObjects.push_back(pWheel);
+	}	
+	nPhysics::iVehicleComponent* pVehiclePhysics = bulletPhysicsFactory->CreateVehicle(physicsVehicle, bulletPhysicsWorld);
+	g_vec_pGameComponentObjects.push_back(pVehiclePhysics);
+	pMainCar->SetComponent(pVehiclePhysics);
+	pMainCar->SetUniqueEntityId(1);
+	bulletPhysicsWorld->AddComponent(pMainCar->GetComponent());
 
 	pCurrentObject = pFindObjectByFriendlyName("mainCharacter");
 

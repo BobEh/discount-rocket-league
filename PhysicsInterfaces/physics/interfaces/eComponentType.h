@@ -8,6 +8,7 @@ namespace nPhysics
 		plane,
 		cloth,
 		hinge,
-		ghostBox
+		ghostBox,
+		vehicle
 	};
 }

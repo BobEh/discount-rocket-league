@@ -5,6 +5,7 @@
 #include "iPhysicsWorld.h"
 #include "iHingeComponent.h"
 #include "iGhostBoxComponent.h"
+#include "iVehicleComponent.h"
 
 namespace nPhysics
 {
@@ -19,5 +20,6 @@ namespace nPhysics
 		virtual iClothComponent* CreateCloth(const sClothDef& def) = 0;
 		virtual iHingeComponent* CreateHinge(const sHingeDef& def) = 0;
 		virtual iGhostBoxComponent* CreateGhostBox(const sGhostBoxDef& def) = 0;
+		virtual iVehicleComponent* CreateVehicle(const sVehicleDef& def, iPhysicsWorld* world) = 0;
 	};
 }

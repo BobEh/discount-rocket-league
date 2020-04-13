@@ -89,6 +89,8 @@ cFlyCamera* thePlatformCamera = NULL;
 
 // game object vectors
 std::vector<iObject*> g_vec_pGameObjects;
+std::vector<iObject*> g_vec_pCarObjects;
+std::vector<iObject*> g_vec_pWheelObjects;
 std::vector<iObject*> g_vec_pEnvironmentObjects;
 std::vector<iObject*> g_vec_pGameFBOObjects;
 std::vector<nPhysics::iPhysicsComponent*> g_vec_pGameComponentObjects;

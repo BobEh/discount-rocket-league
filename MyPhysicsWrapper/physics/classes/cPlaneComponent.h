@@ -32,6 +32,9 @@ namespace nPhysics
 		virtual void SetMassType(int physicsType);
 		virtual void ApplyForce(const glm::vec3& force);
 		virtual std::string GetPlaneType();
+
+		virtual int GetNumWheels();
+
 		cRigidBody* mBody;
 	private:
 		glm::mat4 transform;

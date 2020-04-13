@@ -62,6 +62,8 @@ namespace nPhysics
 			return AddRigidBodies(dynamic_cast<cHingeComponent*>(component));
 		case eComponentType::ghostBox:
 			return AddRigidBodies(dynamic_cast<cGhostBoxComponent*>(component));
+		case eComponentType::vehicle:
+			return AddRigidBodies(dynamic_cast<cVehicleComponent*>(component));
 		default:
 			break;
 		}
@@ -83,11 +85,17 @@ namespace nPhysics
 			return RemoveRigidBodies(dynamic_cast<cHingeComponent*>(component));
 		case eComponentType::ghostBox:
 			return RemoveRigidBodies(dynamic_cast<cGhostBoxComponent*>(component));
+		case eComponentType::vehicle:
+			return RemoveRigidBodies(dynamic_cast<cVehicleComponent*>(component));
 		default:
 			break;
 		}
 		
 		return false;
+	}
+	btDiscreteDynamicsWorld* cPhysicsWorld::GetBulletWorld()
+	{
+		return this->mDynamicsWorld;
 	}
 	void cPhysicsWorld::SetCollisionListener(iCollisionListener* _collisionListener)
 	{
@@ -138,6 +146,16 @@ namespace nPhysics
 		mDynamicsWorld->addCollisionObject(component->mGhostObject);
 		return true;
 	}
+	bool cPhysicsWorld::AddRigidBodies(cVehicleComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->addRigidBody(component->mBody);
+		mDynamicsWorld->addVehicle(component->mVehicle);
+		return true;
+	}
 	bool cPhysicsWorld::RemoveRigidBodies(cBallComponent* component)
 	{
 		if (!component)
@@ -173,6 +191,16 @@ namespace nPhysics
 			return false;
 		}
 		mDynamicsWorld->removeCollisionObject(component->mGhostObject);
+		return true;
+	}
+	bool cPhysicsWorld::RemoveRigidBodies(cVehicleComponent* component)
+	{
+		if (!component)
+		{
+			return false;
+		}
+		mDynamicsWorld->removeRigidBody(component->mBody);
+		mDynamicsWorld->removeVehicle(component->mVehicle);
 		return true;
 	}
 }

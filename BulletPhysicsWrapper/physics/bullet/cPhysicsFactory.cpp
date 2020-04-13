@@ -44,4 +44,13 @@ namespace nPhysics
 	{
 		return new cGhostBoxComponent(def);
 	}
+	iVehicleComponent* cPhysicsFactory::CreateVehicle(const sVehicleDef& def, iPhysicsWorld* world)
+	{
+		cPhysicsWorld* physicsWorld = dynamic_cast<cPhysicsWorld*>(world);
+		if (!physicsWorld)
+		{
+			return 0;
+		}
+		return new cVehicleComponent(def, physicsWorld->GetBulletWorld());
+	}
 }

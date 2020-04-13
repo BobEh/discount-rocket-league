@@ -1375,6 +1375,27 @@ void DrawSecondPass()
 
 	}//for (int index...
 
+	for (int index = 0; index != g_vec_pCarObjects.size(); index++)
+	{
+		glm::mat4 matModel = glm::mat4(1.0f);
+
+		iObject* pCurrentObject = g_vec_pCarObjects[index];
+
+		DrawObject(matModel, pCurrentObject, shaderProgID, pTheVAOManager);
+
+		int numWheels = pCurrentObject->GetNumWheels();
+		for (int i = 0; i < numWheels; i++)
+		{
+			iObject* pCurrentWheel = g_vec_pWheelObjects.at(i);
+
+			glm::mat4 wheelTrans = glm::mat4(1.0f);
+
+			pCurrentObject->GetTransform(wheelTrans);
+
+			DrawObject(wheelTrans, pCurrentWheel, shaderProgID, pTheVAOManager);
+		}
+	}
+
 	for (int index = 0; index != g_vec_pClothObjects.size(); index++)
 	{
 		iObject* pCurrentObject = ::g_vec_pClothObjects[index];

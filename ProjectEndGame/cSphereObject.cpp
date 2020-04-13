@@ -426,9 +426,7 @@ void cSphereObject::setDisableDepthBufferWrite(bool disableDepthBufferWrite)
 
 void cSphereObject::GetTransform(glm::mat4& transformOut)
 {
-	EnterCriticalSection(&object_lock);
-	transformOut = this->_matWorld;
-	LeaveCriticalSection(&object_lock);
+	this->_component->GetTransform(transformOut);
 }
 
 void cSphereObject::GetPosition(glm::vec3& positionOut)
@@ -524,6 +522,11 @@ int cSphereObject::GetUniqueEntityId()
 bool cSphereObject::IsCollidingWith(int uniqueEntityId)
 {
 	return this->_component->IsCollidingWith(uniqueEntityId);
+}
+
+int cSphereObject::GetNumWheels()
+{
+	return this->_component->GetNumWheels();
 }
 
 cSphereObject::cSphereObject(nPhysics::eComponentType componentType)

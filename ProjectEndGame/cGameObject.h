@@ -35,6 +35,8 @@ public:
 	virtual int GetUniqueEntityId();
 	virtual bool IsCollidingWith(int uniqueEntityId);
 
+	virtual int GetNumWheels();
+
 	nPhysics::eComponentType mComponentType;
 
 	virtual int GetMassType();

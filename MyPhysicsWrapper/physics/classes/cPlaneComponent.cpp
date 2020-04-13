@@ -54,6 +54,11 @@ std::string nPhysics::cPlaneComponent::GetPlaneType()
 	return planeType;
 }
 
+int nPhysics::cPlaneComponent::GetNumWheels()
+{
+	return 0;
+}
+
 nPhysics::cPlaneComponent::cPlaneComponent(nPhysics::sPlaneDef thePlaneDef)
 {
 	phys::sRigidBodyDef physDef;

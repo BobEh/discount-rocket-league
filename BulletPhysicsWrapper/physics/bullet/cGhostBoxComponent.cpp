@@ -86,4 +86,8 @@ namespace nPhysics
 	{
 		return false;
 	}
+	int cGhostBoxComponent::GetNumWheels()
+	{
+		return 0;
+	}
 }

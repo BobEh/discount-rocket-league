@@ -43,4 +43,8 @@ namespace nPhysics
 	{
 		return nullptr;
 	}
+	iVehicleComponent* cPhysicsFactory::CreateVehicle(const sVehicleDef& def, iPhysicsWorld* world)
+	{
+		return nullptr;
+	}
 }

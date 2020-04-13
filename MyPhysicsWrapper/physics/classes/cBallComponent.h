@@ -33,6 +33,9 @@ namespace nPhysics
 		virtual int GetMassType();
 		virtual void SetMassType(int physicsType);
 		virtual std::string GetPlaneType();
+
+		virtual int GetNumWheels();
+
 		cRigidBody* mBody;
 	private:
 		//phys::cRigidBody rigidBody;

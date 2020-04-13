@@ -69,6 +69,11 @@ std::string nPhysics::cBallComponent::GetPlaneType()
 	return planeType;
 }
 
+int nPhysics::cBallComponent::GetNumWheels()
+{
+	return 0;
+}
+
 nPhysics::cBallComponent::cBallComponent(nPhysics::sBallDef theBallDef)
 {
 	phys::sRigidBodyDef physDef;

@@ -101,3 +101,7 @@ void nPhysics::cPlaneComponent::ApplyForce(const glm::vec3& force)
 	//mBody->applyCentralForce(nConvert::ToBullet(force));
 }
 
+int nPhysics::cPlaneComponent::GetNumWheels()
+{
+	return 0;
+}

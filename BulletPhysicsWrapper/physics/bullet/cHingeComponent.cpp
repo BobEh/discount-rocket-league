@@ -78,4 +78,8 @@ namespace nPhysics
 	{
 		return false;
 	}
+	int cHingeComponent::GetNumWheels()
+	{
+		return 0;
+	}
 }

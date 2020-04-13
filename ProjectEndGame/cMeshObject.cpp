@@ -385,6 +385,11 @@ bool cMeshObject::IsCollidingWith(int uniqueEntityId)
 	return this->_component->IsCollidingWith(uniqueEntityId);
 }
 
+int cMeshObject::GetNumWheels()
+{
+	return 0;
+}
+
 cMeshObject::cMeshObject(nPhysics::eComponentType componentType)
 {
 	this->_scale = 0.0f;

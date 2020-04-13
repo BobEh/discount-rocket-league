@@ -116,3 +116,8 @@ int nPhysics::cBallComponent::GetUniqueEntityId()
 {
 	return 0;
 }
+
+int nPhysics::cBallComponent::GetNumWheels()
+{
+	return 0;
+}

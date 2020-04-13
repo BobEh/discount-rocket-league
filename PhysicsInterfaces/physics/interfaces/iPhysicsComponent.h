@@ -5,6 +5,7 @@
 #include <glm\ext\matrix_float4x4.hpp>
 #include <string>
 #include <glm/gtx/quaternion.hpp>
+#include <vector>
 //#include <matrix.hpp>
 
 namespace nPhysics
@@ -32,6 +33,8 @@ namespace nPhysics
 		virtual size_t NumNodes() = 0;
 		virtual bool GetNodeRadius(size_t index, float& radiusOut) = 0;
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut) = 0;
+
+		virtual int GetNumWheels() = 0;
 
 		virtual void SetUniqueEntityId(int id) = 0;
 		virtual int GetUniqueEntityId() = 0;

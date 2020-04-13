@@ -8,6 +8,7 @@
 #include <cPlaneComponent.h>
 #include "cHingeComponent.h"
 #include "cGhostBoxComponent.h"
+#include "cVehicleComponent.h"
 
 namespace nPhysics
 {
@@ -24,6 +25,8 @@ namespace nPhysics
 		//virtual std::vector<nPhysics::iPhysicsComponent*> GetComponentVec();
 		//virtual std::vector<phys::cRigidBody*> GetWorldBodiesVec();
 		//virtual phys::cWorld* GetWorld();
+		
+		btDiscreteDynamicsWorld* GetBulletWorld();
 
 		void SetCollisionListener(iCollisionListener* collisionListener);
 
@@ -32,10 +35,12 @@ namespace nPhysics
 		bool AddRigidBodies(cPlaneComponent* component);
 		bool AddRigidBodies(cHingeComponent* component);
 		bool AddRigidBodies(cGhostBoxComponent* component);
+		bool AddRigidBodies(cVehicleComponent* component);
 		bool RemoveRigidBodies(cBallComponent* component);
 		bool RemoveRigidBodies(cPlaneComponent* component);
 		bool RemoveRigidBodies(cHingeComponent* component);
 		bool RemoveRigidBodies(cGhostBoxComponent* component);
+		bool RemoveRigidBodies(cVehicleComponent* component);
 		btDefaultCollisionConfiguration* mCollisionConfiguration;
 		btCollisionDispatcher* mDispatcher;
 		btBroadphaseInterface* mOverlappingPairCache;
