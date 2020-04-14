@@ -360,6 +360,10 @@ nPhysics::iPhysicsComponent* cMeshObject::GetComponent()
 	return this->_component;
 }
 
+void cMeshObject::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}
+
 void cMeshObject::SetUniqueEntityId(int id)
 {
 	if (this->_component)
@@ -388,6 +392,15 @@ bool cMeshObject::IsCollidingWith(int uniqueEntityId)
 int cMeshObject::GetNumWheels()
 {
 	return 0;
+}
+
+void cMeshObject::SetIsWheel(bool isWheel)
+{
+}
+
+bool cMeshObject::GetIsWheel()
+{
+	return false;
 }
 
 cMeshObject::cMeshObject(nPhysics::eComponentType componentType)

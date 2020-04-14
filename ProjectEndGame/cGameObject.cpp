@@ -307,9 +307,22 @@ bool cGameObject::IsCollidingWith(int uniqueEntityId)
 	return this->_component->IsCollidingWith(uniqueEntityId);
 }
 
+void cGameObject::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}
+
 int cGameObject::GetNumWheels()
 {
 	return 0;
+}
+
+void cGameObject::SetIsWheel(bool isWheel)
+{
+}
+
+bool cGameObject::GetIsWheel()
+{
+	return false;
 }
 
 int cGameObject::GetMassType()

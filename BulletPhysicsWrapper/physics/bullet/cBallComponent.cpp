@@ -121,3 +121,7 @@ int nPhysics::cBallComponent::GetNumWheels()
 {
 	return 0;
 }
+
+void nPhysics::cBallComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}

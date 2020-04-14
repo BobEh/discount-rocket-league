@@ -90,4 +90,7 @@ namespace nPhysics
 	{
 		return 0;
 	}
+	void cGhostBoxComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+	{
+	}
 }

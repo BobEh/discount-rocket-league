@@ -1431,6 +1431,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	physicsVehicle.Position = glm::vec3(0.0f, 23.0f, 10.0f);
 	physicsVehicle.Width = glm::vec3(scaleCar);
 	physicsVehicle.Mass = 1000.0f;
+	
 	for (int i = 0; i < 4; i++)
 	{
 		iObject* pWheel = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
@@ -1452,32 +1453,34 @@ DWORD WINAPI LoadObjects(LPVOID params)
 		if (i == 0)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(-3.9f, 1.0f, -3.5f);			
+			physicsWheel.ConnectionPoint = glm::vec3(-13.9f, 1.0f, -3.5f);			
 			physicsWheel.IsFrontWheel = true;
 			physicsWheel.Radius = 1.5f;
 		}
 		if (i == 1)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(3.9f, 1.0f, -3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(13.9f, 1.0f, -3.5f);
 			physicsWheel.IsFrontWheel = true;
 			physicsWheel.Radius = 1.5f;
 		}
 		if (i == 2)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(-3.9f, 1.0f, 3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(-13.9f, 1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
 			physicsWheel.Radius = 1.5f;
 		}
 		if (i == 3)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(3.9f, 1.0f, 3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(13.9f, 1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
 			physicsWheel.Radius = 1.5f;
 		}
 		pWheel->setPositionXYZ(physicsWheel.ConnectionPoint);
+		pWheel->SetIsWheel(true);
+		//pWheel->SetComponent(pVehiclePhysics);
 		physicsVehicle.Wheels.push_back(physicsWheel);
 		g_vec_pWheelObjects.push_back(pWheel);
 	}	

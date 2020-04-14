@@ -81,8 +81,7 @@ namespace nPhysics
 	}
 	void cVehicleComponent::GetTransform(glm::mat4& transformOut)
 	{
-		btTransform transform;
-		mBody->getMotionState()->getWorldTransform(transform);
+		btTransform transform = mVehicle->getChassisWorldTransform();
 		nConvert::ToSimple(transform, transformOut);
 	}
 	void cVehicleComponent::ApplyForce(const glm::vec3& force)

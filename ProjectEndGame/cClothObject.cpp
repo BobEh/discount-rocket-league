@@ -327,6 +327,10 @@ nPhysics::iPhysicsComponent* cClothObject::GetComponent()
 	return this->_component;
 }
 
+void cClothObject::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}
+
 void cClothObject::SetUniqueEntityId(int id)
 {
 }
@@ -344,6 +348,15 @@ bool cClothObject::IsCollidingWith(int uniqueEntityId)
 int cClothObject::GetNumWheels()
 {
 	return 0;
+}
+
+void cClothObject::SetIsWheel(bool isWheel)
+{
+}
+
+bool cClothObject::GetIsWheel()
+{
+	return false;
 }
 
 cClothObject::cClothObject(nPhysics::eComponentType componentType)

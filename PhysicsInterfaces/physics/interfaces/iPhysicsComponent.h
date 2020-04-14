@@ -35,6 +35,7 @@ namespace nPhysics
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut) = 0;
 
 		virtual int GetNumWheels() = 0;
+		virtual void GetWheelTransform(glm::mat4& transformOut, int wheel) = 0;
 
 		virtual void SetUniqueEntityId(int id) = 0;
 		virtual int GetUniqueEntityId() = 0;

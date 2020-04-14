@@ -1390,7 +1390,7 @@ void DrawSecondPass()
 
 			glm::mat4 wheelTrans = glm::mat4(1.0f);
 
-			pCurrentObject->GetTransform(wheelTrans);
+ 			pCurrentObject->GetWheelTransform(wheelTrans, i);
 
 			DrawObject(wheelTrans, pCurrentWheel, shaderProgID, pTheVAOManager);
 		}

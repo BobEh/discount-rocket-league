@@ -499,6 +499,11 @@ nPhysics::iPhysicsComponent* cSphereObject::GetComponent()
 	return result;
 }
 
+void cSphereObject::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+	this->_component->GetWheelTransform(transformOut, wheel);
+}
+
 void cSphereObject::SetUniqueEntityId(int id)
 {
 	if (this->_component)
@@ -527,6 +532,16 @@ bool cSphereObject::IsCollidingWith(int uniqueEntityId)
 int cSphereObject::GetNumWheels()
 {
 	return this->_component->GetNumWheels();
+}
+
+void cSphereObject::SetIsWheel(bool isWheel)
+{
+	this->_isWheel = isWheel;
+}
+
+bool cSphereObject::GetIsWheel()
+{
+	return this->_isWheel;
 }
 
 cSphereObject::cSphereObject(nPhysics::eComponentType componentType)

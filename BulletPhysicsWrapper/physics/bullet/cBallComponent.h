@@ -32,6 +32,7 @@ namespace nPhysics
 		virtual bool GetNodePosition(size_t index, glm::vec3& positionOut);
 
 		virtual int GetNumWheels();
+		virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
 
 		btRigidBody* mBody;
 	private:

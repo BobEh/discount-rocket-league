@@ -34,11 +34,15 @@ public:
 	virtual void SetComponent(nPhysics::iPhysicsComponent* component);
 	virtual nPhysics::iPhysicsComponent* GetComponent();
 
+	virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
+
 	virtual void SetUniqueEntityId(int id);
 	virtual int GetUniqueEntityId();
 	virtual bool IsCollidingWith(int uniqueEntityId);
 
 	virtual int GetNumWheels();
+	virtual void SetIsWheel(bool isWheel);
+	virtual bool GetIsWheel();
 
 	nPhysics::eComponentType mComponentType;
 

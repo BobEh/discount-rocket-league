@@ -178,9 +178,25 @@ void DrawObject(glm::mat4 m, iObject* pCurrentObject, GLint shaderProgID, cVAOMa
 		}
 		if (pCurrentObject->GetComponent() == nullptr)
 		{
-			m = calculateWorldMatrix(pCurrentObject);
+			if (pCurrentObject->GetIsWheel())
+			{
+				//Rotation
+				glm::mat4 rotation = glm::mat4(pCurrentObject->getRotationXYZ());
+				m *= rotation;
+
+				//Scale
+				float theScale = pCurrentObject->getScale();
+				glm::vec3 scaleVec = glm::vec3(theScale);
+				glm::mat4 scale = glm::scale(glm::mat4(1.0f),
+					glm::vec3(theScale));
+				m = m * scale;
+			}
+			else
+			{
+				m = calculateWorldMatrix(pCurrentObject);
+			}
 		}
-		if (pCurrentObject->GetComponent() != nullptr)
+		else if (pCurrentObject->GetComponent() != nullptr)
 		{
 			if (pCurrentObject->GetComponent()->GetComponentType() != nPhysics::eComponentType::cloth)
 			{

@@ -59,6 +59,10 @@ int nPhysics::cPlaneComponent::GetNumWheels()
 	return 0;
 }
 
+void nPhysics::cPlaneComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}
+
 nPhysics::cPlaneComponent::cPlaneComponent(nPhysics::sPlaneDef thePlaneDef)
 {
 	phys::sRigidBodyDef physDef;

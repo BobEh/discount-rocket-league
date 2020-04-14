@@ -74,6 +74,10 @@ int nPhysics::cBallComponent::GetNumWheels()
 	return 0;
 }
 
+void nPhysics::cBallComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}
+
 nPhysics::cBallComponent::cBallComponent(nPhysics::sBallDef theBallDef)
 {
 	phys::sRigidBodyDef physDef;

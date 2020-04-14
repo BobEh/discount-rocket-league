@@ -105,3 +105,7 @@ int nPhysics::cPlaneComponent::GetNumWheels()
 {
 	return 0;
 }
+
+void nPhysics::cPlaneComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+{
+}

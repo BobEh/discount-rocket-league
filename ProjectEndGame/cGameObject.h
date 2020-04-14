@@ -35,7 +35,11 @@ public:
 	virtual int GetUniqueEntityId();
 	virtual bool IsCollidingWith(int uniqueEntityId);
 
+	virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
+
 	virtual int GetNumWheels();
+	virtual void SetIsWheel(bool isWheel);
+	virtual bool GetIsWheel();
 
 	nPhysics::eComponentType mComponentType;
 

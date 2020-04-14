@@ -34,6 +34,7 @@ namespace nPhysics
 		virtual std::string GetPlaneType();
 
 		virtual int GetNumWheels();
+		virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
 
 		cSoftBody* mBody;
 	private:

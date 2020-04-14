@@ -135,4 +135,7 @@ namespace nPhysics
 	{
 		return 0;
 	}
+	void cClothComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+	{
+	}
 }

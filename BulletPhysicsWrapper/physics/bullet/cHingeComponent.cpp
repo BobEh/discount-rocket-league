@@ -82,4 +82,7 @@ namespace nPhysics
 	{
 		return 0;
 	}
+	void cHingeComponent::GetWheelTransform(glm::mat4& transformOut, int wheel)
+	{
+	}
 }

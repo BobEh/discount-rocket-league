@@ -14,6 +14,7 @@ class cSphereObject : public iObject
 private:
 	CRITICAL_SECTION object_lock;
 public:
+	
 	inline const nPhysics::eComponentType& GetComponentType() { return mComponentType; }
 
 	virtual void GetTransform(glm::mat4& transformOut);
@@ -36,11 +37,15 @@ public:
 	virtual void SetComponent(nPhysics::iPhysicsComponent* component);
 	virtual nPhysics::iPhysicsComponent* GetComponent();
 
+	virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
+
 	virtual void SetUniqueEntityId(int id);
 	virtual int GetUniqueEntityId();
 	virtual bool IsCollidingWith(int uniqueEntityId);
 
 	virtual int GetNumWheels();
+	virtual void SetIsWheel(bool isWheel);
+	virtual bool GetIsWheel();
 
 	nPhysics::eComponentType mComponentType;
 
@@ -129,6 +134,7 @@ public:
 
 
 private:
+	bool _isWheel;
 	std::string _Animation;
 	std::string _Behaviour;
 	cSimpleAssimpSkinnedMesh* pSM;
