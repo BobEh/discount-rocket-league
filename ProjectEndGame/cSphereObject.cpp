@@ -454,6 +454,13 @@ void cSphereObject::ApplyForce(const glm::vec3& force)
 	this->_component->ApplyForce(force);
 }
 
+void cSphereObject::ApplyEngineForce(float force, int wheel)
+{
+	this->_component->ApplyEngineForce(force, wheel);
+}
+
+
+
 int cSphereObject::GetMassType()
 {
 	EnterCriticalSection(&object_lock);
@@ -531,6 +538,10 @@ bool cSphereObject::IsCollidingWith(int uniqueEntityId)
 
 int cSphereObject::GetNumWheels()
 {
+	if (!this->_component)
+	{
+		return 0;
+	}
 	return this->_component->GetNumWheels();
 }
 

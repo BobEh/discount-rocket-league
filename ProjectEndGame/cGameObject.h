@@ -22,6 +22,7 @@ public:
 	virtual void SetPosition(glm::vec3 positionIn);
 
 	virtual void ApplyForce(const glm::vec3& force);
+	virtual void ApplyEngineForce(float force, int wheel);
 
 	virtual void GetVelocity(glm::vec3& velocityOut);
 

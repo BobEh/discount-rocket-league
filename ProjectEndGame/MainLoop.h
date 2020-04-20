@@ -1394,6 +1394,16 @@ void DrawSecondPass()
 
 			DrawObject(wheelTrans, pCurrentWheel, shaderProgID, pTheVAOManager);
 		}
+		pCurrentObject->ApplyEngineForce(gEngineForce, 0);
+		pCurrentObject->ApplyEngineForce(gEngineForce, 1);
+		if (gEngineForce > 0.0f)
+		{
+			gEngineForce -= 100.0f;
+		}
+		if (gEngineForce < 0.0f)
+		{
+			gEngineForce += 100.0f;
+		}
 	}
 
 	for (int index = 0; index != g_vec_pClothObjects.size(); index++)

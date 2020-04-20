@@ -330,6 +330,10 @@ void cMeshObject::ApplyForce(const glm::vec3& force)
 	//this->_component->ApplyForce(force);
 }
 
+void cMeshObject::ApplyEngineForce(float force, int wheel)
+{
+}
+
 int cMeshObject::GetMassType()
 {
 	return _physicsType;

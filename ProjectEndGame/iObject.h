@@ -25,6 +25,8 @@ public:
 	virtual void GetVelocity(glm::vec3& velocityOut) = 0;
 
 	virtual void ApplyForce(const glm::vec3& force) = 0;
+	virtual void ApplyEngineForce(float force, int wheel) = 0;
+	virtual void ApplyTorque(const glm::vec3& torque) = 0;
 
 	virtual std::string GetPlaneType() = 0;
 	virtual void SetPlaneType(std::string planeType) = 0;

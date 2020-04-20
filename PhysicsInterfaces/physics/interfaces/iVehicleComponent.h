@@ -10,12 +10,12 @@ namespace nPhysics
 			WheelDirection(0.0f, -1.0f, 0.0f),
 			Axle(0.0f, 0.0f, 1.0f),
 			SuspensionLength(0.0f),
-			SuspensionLimit(0.0f),
+			SuspensionLimit(10.0f),
 			Radius(1.0f),
 			IsFrontWheel(false),
-			SuspensionDampingRelaxation(0.3f),
-			SuspensionDampingCompression(1.0f),
-			SuspensionStiffness(100.0f),
+			SuspensionDampingRelaxation(0.1f),
+			SuspensionDampingCompression(5.3f),
+			SuspensionStiffness(50.0f),
 			RollInfluence(0.0f),
 			Friction(3000.0f)
 		{}

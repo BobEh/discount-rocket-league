@@ -29,6 +29,11 @@ void nPhysics::cPlaneComponent::ApplyForce(const glm::vec3& force)
 	//mBody->ApplyForce(force);
 }
 
+void nPhysics::cPlaneComponent::ApplyEngineForce(float force, int wheel)
+{
+
+}
+
 void nPhysics::cPlaneComponent::GetVelocity(glm::vec3& velocityOut)
 {
 	velocityOut = velocity;

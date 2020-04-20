@@ -24,6 +24,7 @@ public:
 	virtual void GetVelocity(glm::vec3& velocityOut);
 
 	virtual void ApplyForce(const glm::vec3& force);
+	virtual void ApplyEngineForce(float force, int wheel);
 
 	virtual int GetMassType();
 	virtual void SetMassType(int physicsType);

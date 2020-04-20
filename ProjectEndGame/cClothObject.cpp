@@ -297,6 +297,10 @@ void cClothObject::ApplyForce(const glm::vec3& force)
 	//this->_component->ApplyForce(force);
 }
 
+void cClothObject::ApplyEngineForce(float force, int wheel)
+{
+}
+
 int cClothObject::GetMassType()
 {
 	return _physicsType;

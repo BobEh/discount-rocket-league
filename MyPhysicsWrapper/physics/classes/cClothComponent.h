@@ -17,6 +17,7 @@ namespace nPhysics
 		virtual bool IsCollidingWith(int uniqueEntityId);
 
 		virtual void ApplyForce(const glm::vec3& force);
+		virtual void ApplyEngineForce(float force, int wheel);
 
 		virtual void SetUniqueEntityId(int id);
 		virtual int GetUniqueEntityId();

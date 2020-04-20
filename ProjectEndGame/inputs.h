@@ -450,34 +450,68 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		}*/
 		else
 		{
-			pCurrentObject = pFindObjectByFriendlyName("physicsSphere");
+			pCurrentObject = pFindObjectByFriendlyName("mainCar");
+			if (!pCurrentObject)
+			{
+				return;
+			}
 			if (key == GLFW_KEY_A)
 			{
 				//pCurrentObject->setRotationXYZ(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
-				pCurrentObject->ApplyForce(glm::vec3(0.0f, 0.0f, 20.0f));
+				if (gTurningRadius > -45.0f)
+				{
+					gTurningRadius -= 1.0f;
+				}
 			}
 			if (key == GLFW_KEY_D)
 			{
 				//pCurrentObject->setRotationXYZ(glm::vec3(0.0f, glm::radians(-90.0f), 0.0f));
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
-				pCurrentObject->ApplyForce(glm::vec3(0.0f, 0.0f, -20.0f));
+				if (gTurningRadius < 45.0f)
+				{
+					gTurningRadius += 1.0f;
+				}
 			}
 			if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 			{
-				pCurrentObject->ApplyForce(glm::vec3(0.0f, 1115.0f, 0.0f));
+				pCurrentObject->ApplyForce(glm::vec3(0.0f, 400000.0f, 0.0f));
 				//jumping = true;
 				//currentAnimationName = "Jump";
 			}
 			if (key == GLFW_KEY_S)
 			{
-				//rolling = true;
-				//currentAnimationName = "Roll";
-				pCurrentObject->ApplyForce(glm::vec3(-20.0f, 0.0f, 0.0f));
+				//if (gEngineForce < 0.0f)
+				//{
+				//	gEngineForce = 0.0f;
+				//}
+				//gEngineForce += 5.0f;
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = 2000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(-1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ()* rotation);
+				}
 			}
 			if (key == GLFW_KEY_W)
 			{
-				pCurrentObject->ApplyForce(glm::vec3(20.0f, 0.0f, 0.0f));
+				//if (gEngineForce > 0.0f)
+				//{
+				//	gEngineForce = 0.0f;
+				//}
+				//gEngineForce -= 5.0f;
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = 2000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
+				}
 			}
 			if (key == GLFW_KEY_ENTER)
 			{

@@ -47,6 +47,9 @@ namespace nPhysics
 	void cHingeComponent::ApplyForce(const glm::vec3& force)
 	{
 	}
+	void cHingeComponent::ApplyEngineForce(float force, int wheel)
+	{
+	}
 	void cHingeComponent::GetPosition(glm::vec3& positionOut)
 	{
 	}

@@ -118,6 +118,9 @@ int platformRollCount = 0;
 int platformDyingCount = 0;
 int platformAttackCount = 0;
 
+float gEngineForce = 0.0f;
+float gTurningRadius = 0.0f;
+
 int enemyCount1 = 0;
 int enemyCount2 = 0;
 int enemyCount3 = 0;

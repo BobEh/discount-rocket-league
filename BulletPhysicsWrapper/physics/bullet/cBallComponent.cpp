@@ -74,6 +74,10 @@ void nPhysics::cBallComponent::ApplyForce(const glm::vec3& force)
 	mBody->applyCentralForce(nConvert::ToBullet(force));
 }
 
+void nPhysics::cBallComponent::ApplyEngineForce(float force, int wheel)
+{
+}
+
 void nPhysics::cBallComponent::GetPosition(glm::vec3& positionOut)
 {
 	btTransform thePosition;

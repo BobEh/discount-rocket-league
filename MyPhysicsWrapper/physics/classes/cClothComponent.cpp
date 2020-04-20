@@ -84,6 +84,9 @@ namespace nPhysics
 	void cClothComponent::ApplyForce(const glm::vec3& force)
 	{
 	}
+	void cClothComponent::ApplyEngineForce(float force, int wheel)
+	{
+	}
 	void cClothComponent::SetUniqueEntityId(int id)
 	{
 	}

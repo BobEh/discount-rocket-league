@@ -57,6 +57,7 @@ namespace nPhysics
 			info.m_wheelsDampingRelaxation = wheel.SuspensionDampingRelaxation;
 			info.m_wheelsDampingCompression = wheel.SuspensionDampingCompression;
 			info.m_frictionSlip = wheel.Friction;
+			info.m_skidInfo = wheel.Friction;
 			info.m_rollInfluence = wheel.RollInfluence;
 		}
 
@@ -86,9 +87,14 @@ namespace nPhysics
 	}
 	void cVehicleComponent::ApplyForce(const glm::vec3& force)
 	{
+		mBody->activate(true);
+		mBody->applyCentralForce(nConvert::ToBullet(force));
 	}
 	void cVehicleComponent::GetPosition(glm::vec3& positionOut)
 	{
+		positionOut = nConvert::ToSimple(mBody->getCenterOfMassPosition());
+
+		
 	}
 	void cVehicleComponent::SetPosition(glm::vec3 positionIn)
 	{

@@ -257,6 +257,10 @@ void cGameObject::ApplyForce(const glm::vec3& force)
 	//this->_component->ApplyForce(force);
 }
 
+void cGameObject::ApplyEngineForce(float force, int wheel)
+{
+}
+
 void cGameObject::GetVelocity(glm::vec3& velocityOut)
 {
 	velocityOut = this->_velocity;

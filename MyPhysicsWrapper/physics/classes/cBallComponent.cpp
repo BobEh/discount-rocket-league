@@ -29,6 +29,11 @@ void nPhysics::cBallComponent::ApplyForce(const glm::vec3& force)
 	mBody->ApplyForce(force);
 }
 
+void nPhysics::cBallComponent::ApplyEngineForce(float force, int wheel)
+{
+
+}
+
 size_t nPhysics::cBallComponent::NumNodes()
 {
 	return size_t();

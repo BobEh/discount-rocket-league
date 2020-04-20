@@ -43,6 +43,9 @@ namespace nPhysics
 	void cGhostBoxComponent::ApplyForce(const glm::vec3& force)
 	{
 	}
+	void cGhostBoxComponent::ApplyEngineForce(float force, int wheel)
+	{
+	}
 	void cGhostBoxComponent::GetPosition(glm::vec3& positionOut)
 	{
 	}

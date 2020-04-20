@@ -22,6 +22,7 @@ namespace nPhysics
 		virtual bool IsCollidingWith(int uniqueEntityId) = 0;
 
 		virtual void ApplyForce(const glm::vec3& force) = 0;
+		virtual void ApplyEngineForce(float force, int wheel) = 0;
 
 		virtual void GetTransform(glm::mat4& transformOut) = 0;
 

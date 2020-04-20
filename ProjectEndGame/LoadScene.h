@@ -180,6 +180,12 @@ int LoadMeshes()
 	cMesh cubeMesh;
 	pTheModelLoader->LoadPlyModel("assets/models/Cube_1_Unit_from_origin_XYZ_uv.ply", cubeMesh);
 
+	cMesh dominusGTMesh;
+	pTheModelLoader->LoadPlyModel("assets/models/DominusGTBody.ply", dominusGTMesh);
+
+	cMesh dominusGTWheelMesh;
+	pTheModelLoader->LoadPlyModel("assets/models/DominusGTWheel.ply", dominusGTWheelMesh);
+
 	cMesh smallCubeMesh;
 	pTheModelLoader->LoadPlyModel("assets/models/Cube_size1.ply", smallCubeMesh);
 
@@ -240,6 +246,18 @@ int LoadMeshes()
 	pTheVAOManager->LoadModelIntoVAO("cube",
 		cubeMesh,		// Sphere mesh info
 		cubeMeshInfo,
+		shaderProgID);
+
+	sModelDrawInfo dominusGTMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("dominusGTBody",
+		dominusGTMesh,		// Sphere mesh info
+		dominusGTMeshInfo,
+		shaderProgID);
+
+	sModelDrawInfo dominusGTWheelMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("dominusGTWheel",
+		dominusGTWheelMesh,		// Sphere mesh info
+		dominusGTWheelMeshInfo,
 		shaderProgID);
 
 	sModelDrawInfo smallCubeMeshInfo;
@@ -339,6 +357,8 @@ int LoadTextures()
 	g_pTextureManager->Create2DTextureFromBMPFile("mars.bmp", true);
 
 	g_pTextureManager->Create2DTextureFromBMPFile("moon.bmp", true);
+
+	g_pTextureManager->Create2DTextureFromBMPFile("WaveDecal.bmp", true);
 
 	::g_pTextureManager->Create2DTextureFromBMPFile("water_800.bmp", true);
 
@@ -1413,70 +1433,73 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
 
 	iObject* pMainCar = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
-	pMainCar->setMeshName("smallCube");
+	pMainCar->setMeshName("dominusGTBody");
 	pMainCar->setFriendlyName("mainCar");	// We use to search 
 	pMainCar->setPositionXYZ(glm::vec3(0.0f, 3.0f, 0.0f));
 	pMainCar->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	float scaleCar = 6.0f;
+	float scaleCar = 1.0f;
 	pMainCar->setScale(scaleCar);
 	pMainCar->setDebugColour(glm::vec4(0.5f, 0.5f, 1.0f, 1.0f));
 	pMainCar->setInverseMass(1.0f);
 	pMainCar->setIsVisible(true);
 	pMainCar->setIsWireframe(false);
-	pMainCar->setTexture("green.bmp", 1);
+	pMainCar->setTexture("WaveDecal.bmp", 1);
 	pMainCar->setTextureRatio(1, 1);
 	pMainCar->setTransprancyValue(1.0f);
 	g_vec_pCarObjects.push_back(pMainCar);
 	nPhysics::sVehicleDef physicsVehicle;
-	physicsVehicle.Position = glm::vec3(0.0f, 23.0f, 10.0f);
-	physicsVehicle.Width = glm::vec3(scaleCar);
-	physicsVehicle.Mass = 1000.0f;
+	physicsVehicle.Position = glm::vec3(0.0f, 10.0f, 15.0f);
+	physicsVehicle.Width = glm::vec3(6.0f, 2.0f, 16.0f);
+	physicsVehicle.Mass = 400.0f;
 	
 	for (int i = 0; i < 4; i++)
 	{
 		iObject* pWheel = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
-		pWheel->setMeshName("sphere");
+		pWheel->setMeshName("dominusGTWheel");
 		std::string wheelName = "wheel" + (i + 1);
 		pWheel->setFriendlyName(wheelName);	// We use to search 
 		//pWheel->setPositionXYZ(glm::vec3(0.0f, 3.0f, 0.0f));
-		pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-		float scale = 1.0f;
+		float scale = 0.9f;
 		pWheel->setScale(scale);
 		pWheel->setDebugColour(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 		pWheel->setInverseMass(1.0f);
 		pWheel->setIsVisible(true);
 		pWheel->setIsWireframe(false);
-		pWheel->setTexture("green.bmp", 1);
+		pWheel->setTexture("black.bmp", 1);
 		pWheel->setTextureRatio(1, 1);
 		pWheel->setTransprancyValue(1.0f);
 		nPhysics::sWheelDef physicsWheel;
 		if (i == 0)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(-13.9f, 1.0f, -3.5f);			
+			physicsWheel.ConnectionPoint = glm::vec3(-3.5f, -1.0f, -5.0f);			
 			physicsWheel.IsFrontWheel = true;
 			physicsWheel.Radius = 1.5f;
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(-90.0f)));
 		}
 		if (i == 1)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(13.9f, 1.0f, -3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(3.5f, -1.0f, -5.0f);
 			physicsWheel.IsFrontWheel = true;
 			physicsWheel.Radius = 1.5f;
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(90.0f)));
 		}
 		if (i == 2)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(-13.9f, 1.0f, 3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(-3.5f, -1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
 			physicsWheel.Radius = 1.5f;
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(-90.0f)));
 		}
 		if (i == 3)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
-			physicsWheel.ConnectionPoint = glm::vec3(13.9f, 1.0f, 3.5f);
+			physicsWheel.ConnectionPoint = glm::vec3(3.5f, -1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
 			physicsWheel.Radius = 1.5f;
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(90.0f)));
 		}
 		pWheel->setPositionXYZ(physicsWheel.ConnectionPoint);
 		pWheel->SetIsWheel(true);
@@ -1489,6 +1512,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pMainCar->SetComponent(pVehiclePhysics);
 	pMainCar->SetUniqueEntityId(1);
 	bulletPhysicsWorld->AddComponent(pMainCar->GetComponent());
+	g_vec_pGameObjects.push_back(pMainCar);
 
 	pCurrentObject = pFindObjectByFriendlyName("mainCharacter");
 

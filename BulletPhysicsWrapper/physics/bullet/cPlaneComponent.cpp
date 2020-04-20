@@ -101,6 +101,10 @@ void nPhysics::cPlaneComponent::ApplyForce(const glm::vec3& force)
 	//mBody->applyCentralForce(nConvert::ToBullet(force));
 }
 
+void nPhysics::cPlaneComponent::ApplyEngineForce(float force, int wheel)
+{
+}
+
 int nPhysics::cPlaneComponent::GetNumWheels()
 {
 	return 0;
