@@ -1394,16 +1394,42 @@ void DrawSecondPass()
 
 			DrawObject(wheelTrans, pCurrentWheel, shaderProgID, pTheVAOManager);
 		}
-		pCurrentObject->ApplyEngineForce(gEngineForce, 0);
-		pCurrentObject->ApplyEngineForce(gEngineForce, 1);
-		if (gEngineForce > 0.0f)
+		pCurrentObject->ApplyEngineForce(gEngineForce, 2);
+		pCurrentObject->ApplyEngineForce(gEngineForce, 3);
+
+		//Apply engine force and slowing
+		//if (gEngineForce > -100.0f && gEngineForce < 100.0f)
+		//{
+		//	gEngineForce = 0.0f;
+		//}
+		if (gEngineForce > 100.0f)
 		{
 			gEngineForce -= 100.0f;
 		}
-		if (gEngineForce < 0.0f)
+		if (gEngineForce < -100.0f)
 		{
 			gEngineForce += 100.0f;
 		}
+
+		// Apply steering
+		for (int i = 0; i < numWheels; i++)
+		{
+			iObject* pCurrentWheel = g_vec_pWheelObjects.at(i);
+
+			if (i < 2)
+			{
+				pCurrentObject->ApplySteering(glm::radians(gTurningRadius), i);
+			}
+		}
+
+		//if (gTurningRadius > 0.0f)
+		//{
+		//	gTurningRadius -= 1.0f;
+		//}
+		//if (gTurningRadius < 0.0f)
+		//{
+		//	gTurningRadius += 1.0f;
+		//}
 	}
 
 	for (int index = 0; index != g_vec_pClothObjects.size(); index++)

@@ -34,6 +34,10 @@ void nPhysics::cBallComponent::ApplyEngineForce(float force, int wheel)
 
 }
 
+void nPhysics::cBallComponent::ApplySteering(float value, int wheel)
+{
+}
+
 size_t nPhysics::cBallComponent::NumNodes()
 {
 	return size_t();

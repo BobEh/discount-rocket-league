@@ -23,6 +23,9 @@ public:
 
 	virtual void ApplyForce(const glm::vec3& force);
 	virtual void ApplyEngineForce(float force, int wheel);
+	virtual void ApplySteering(float value, int wheel);
+	virtual void SetIsFrontWheel(bool isFrontWheel);
+	virtual bool GetIsFrontWheel();
 
 	virtual void GetVelocity(glm::vec3& velocityOut);
 
@@ -125,6 +128,7 @@ public:
 	void setIsTranspanrancy(bool isTranspanrancy);
 
 private:
+	bool _isFrontWheel;
 	std::string _Animation;
 	std::string _Behaviour;
 	cSimpleAssimpSkinnedMesh* pSM;

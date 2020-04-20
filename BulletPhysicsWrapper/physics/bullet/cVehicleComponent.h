@@ -34,6 +34,7 @@ namespace nPhysics
 
 		virtual void ApplyEngineForce(float force, int wheel);
 		virtual void SetBrake(float brakeforce, int wheel);
+		virtual void ApplySteering(float steering, int wheel);
 		virtual void SetSteering(float steering, int wheel);
 
 		virtual size_t NumNodes();

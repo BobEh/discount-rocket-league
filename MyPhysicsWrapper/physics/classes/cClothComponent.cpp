@@ -87,6 +87,9 @@ namespace nPhysics
 	void cClothComponent::ApplyEngineForce(float force, int wheel)
 	{
 	}
+	void cClothComponent::ApplySteering(float value, int wheel)
+	{
+	}
 	void cClothComponent::SetUniqueEntityId(int id)
 	{
 	}

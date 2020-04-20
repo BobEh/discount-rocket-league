@@ -261,6 +261,19 @@ void cGameObject::ApplyEngineForce(float force, int wheel)
 {
 }
 
+void cGameObject::ApplySteering(float value, int wheel)
+{
+}
+
+void cGameObject::SetIsFrontWheel(bool isFrontWheel)
+{
+}
+
+bool cGameObject::GetIsFrontWheel()
+{
+	return false;
+}
+
 void cGameObject::GetVelocity(glm::vec3& velocityOut)
 {
 	velocityOut = this->_velocity;

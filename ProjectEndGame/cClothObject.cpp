@@ -301,6 +301,19 @@ void cClothObject::ApplyEngineForce(float force, int wheel)
 {
 }
 
+void cClothObject::ApplySteering(float value, int wheel)
+{
+}
+
+void cClothObject::SetIsFrontWheel(bool isFrontWheel)
+{
+}
+
+bool cClothObject::GetIsFrontWheel()
+{
+	return false;
+}
+
 int cClothObject::GetMassType()
 {
 	return _physicsType;

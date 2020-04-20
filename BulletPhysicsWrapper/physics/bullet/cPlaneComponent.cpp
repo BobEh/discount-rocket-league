@@ -105,6 +105,11 @@ void nPhysics::cPlaneComponent::ApplyEngineForce(float force, int wheel)
 {
 }
 
+void nPhysics::cPlaneComponent::ApplySteering(float value, int wheel)
+{
+
+}
+
 int nPhysics::cPlaneComponent::GetNumWheels()
 {
 	return 0;

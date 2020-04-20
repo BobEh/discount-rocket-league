@@ -154,6 +154,10 @@ namespace nPhysics
 	{
 		mVehicle->setBrake(brakeforce, wheel);
 	}
+	void cVehicleComponent::ApplySteering(float steering, int wheel)
+	{
+		mVehicle->setSteeringValue(steering, wheel);
+	}
 	void cVehicleComponent::SetSteering(float steering, int wheel)
 	{
 		mVehicle->setSteeringValue(steering, wheel);

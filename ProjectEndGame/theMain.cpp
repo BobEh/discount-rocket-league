@@ -50,7 +50,7 @@ int main(void)
 	LoadLights();
 
 	//set current object
-	iObject* pCurrentObject = pFindObjectByFriendlyName("mainCharacter");
+	iObject* pCurrentObject = pFindObjectByFriendlyName("mainCar");
 
 	::g_pFlyCamera = new cFlyCamera();
 	::g_pFlyCamera->eye = glm::vec3(0.0f, 80.0, -80.0);
@@ -140,6 +140,10 @@ int main(void)
 			Pv = glm::lookAt(g_pFlyCamera->eye, glm::vec3(0.0f, 0.0f, 0.0f), g_pFlyCamera->getUpVector());
 		}
 		glViewport(0, 0, width, height);
+
+		//iObject* pCurrentObject = pFindObjectByFriendlyName("mainCar");
+		
+
 
 		PlaceLights();
 

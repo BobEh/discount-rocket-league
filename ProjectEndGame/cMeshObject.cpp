@@ -334,6 +334,19 @@ void cMeshObject::ApplyEngineForce(float force, int wheel)
 {
 }
 
+void cMeshObject::ApplySteering(float value, int wheel)
+{
+}
+
+void cMeshObject::SetIsFrontWheel(bool isFrontWheel)
+{
+}
+
+bool cMeshObject::GetIsFrontWheel()
+{
+	return false;
+}
+
 int cMeshObject::GetMassType()
 {
 	return _physicsType;

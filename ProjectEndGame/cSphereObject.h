@@ -28,6 +28,9 @@ public:
 
 	virtual void ApplyForce(const glm::vec3& force);
 	virtual void ApplyEngineForce(float force, int wheel);
+	virtual void ApplySteering(float value, int wheel);
+	virtual void SetIsFrontWheel(bool isFrontWheel);
+	virtual bool GetIsFrontWheel();
 
 	virtual int GetMassType();
 	virtual void SetMassType(int physicsType);
@@ -135,6 +138,7 @@ public:
 
 
 private:
+	bool _isFrontWheel;
 	bool _isWheel;
 	std::string _Animation;
 	std::string _Behaviour;

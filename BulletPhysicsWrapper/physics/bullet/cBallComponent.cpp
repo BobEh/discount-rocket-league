@@ -78,6 +78,11 @@ void nPhysics::cBallComponent::ApplyEngineForce(float force, int wheel)
 {
 }
 
+void nPhysics::cBallComponent::ApplySteering(float value, int wheel)
+{
+
+}
+
 void nPhysics::cBallComponent::GetPosition(glm::vec3& positionOut)
 {
 	btTransform thePosition;

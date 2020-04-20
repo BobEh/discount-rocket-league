@@ -1465,7 +1465,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 		pWheel->setInverseMass(1.0f);
 		pWheel->setIsVisible(true);
 		pWheel->setIsWireframe(false);
-		pWheel->setTexture("black.bmp", 1);
+		pWheel->setTexture("white.bmp", 1);
 		pWheel->setTextureRatio(1, 1);
 		pWheel->setTransprancyValue(1.0f);
 		nPhysics::sWheelDef physicsWheel;
@@ -1474,32 +1474,38 @@ DWORD WINAPI LoadObjects(LPVOID params)
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
 			physicsWheel.ConnectionPoint = glm::vec3(-3.5f, -1.0f, -5.0f);			
 			physicsWheel.IsFrontWheel = true;
+			pWheel->SetIsFrontWheel(true);
 			physicsWheel.Radius = 1.5f;
-			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(-90.0f)));
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 		}
 		if (i == 1)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
 			physicsWheel.ConnectionPoint = glm::vec3(3.5f, -1.0f, -5.0f);
 			physicsWheel.IsFrontWheel = true;
+			pWheel->SetIsFrontWheel(true);
 			physicsWheel.Radius = 1.5f;
-			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(90.0f)));
+			pWheel->setRotationXYZ(glm::vec3(0.0f, glm::radians(180.0f), 0.0f));
 		}
 		if (i == 2)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
 			physicsWheel.ConnectionPoint = glm::vec3(-3.5f, -1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
+			pWheel->SetIsFrontWheel(false);
 			physicsWheel.Radius = 1.5f;
-			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(-90.0f)));
+			pWheel->setScale(1.0f);
+			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 		}
 		if (i == 3)
 		{
 			physicsWheel.Axle = glm::vec3(-1.0f, 0.0f, 0.0f);
 			physicsWheel.ConnectionPoint = glm::vec3(3.5f, -1.0f, 3.5f);
 			physicsWheel.IsFrontWheel = false;
+			pWheel->SetIsFrontWheel(false);
 			physicsWheel.Radius = 1.5f;
-			pWheel->setRotationXYZ(glm::vec3(0.0f, 0.0f, glm::radians(90.0f)));
+			pWheel->setScale(1.0f);
+			pWheel->setRotationXYZ(glm::vec3(0.0f, glm::radians(180.0f), 0.0f));
 		}
 		pWheel->setPositionXYZ(physicsWheel.ConnectionPoint);
 		pWheel->SetIsWheel(true);

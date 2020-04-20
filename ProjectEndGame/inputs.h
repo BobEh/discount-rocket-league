@@ -459,18 +459,18 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 			{
 				//pCurrentObject->setRotationXYZ(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
-				if (gTurningRadius > -45.0f)
+				if (gTurningRadius < 45.0f)
 				{
-					gTurningRadius -= 1.0f;
+					gTurningRadius += 2.0f;
 				}
 			}
 			if (key == GLFW_KEY_D)
 			{
 				//pCurrentObject->setRotationXYZ(glm::vec3(0.0f, glm::radians(-90.0f), 0.0f));
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
-				if (gTurningRadius < 45.0f)
+				if (gTurningRadius > -45.0f)
 				{
-					gTurningRadius += 1.0f;
+					gTurningRadius -= 2.0f;
 				}
 			}
 			if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
@@ -505,7 +505,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//gEngineForce -= 5.0f;
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = 2000.0f;
+					gEngineForce = -2000.0f;
 				}
 				else
 				{

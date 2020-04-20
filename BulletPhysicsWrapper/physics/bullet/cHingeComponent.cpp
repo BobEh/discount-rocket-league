@@ -50,6 +50,9 @@ namespace nPhysics
 	void cHingeComponent::ApplyEngineForce(float force, int wheel)
 	{
 	}
+	void cHingeComponent::ApplySteering(float value, int wheel)
+	{
+	}
 	void cHingeComponent::GetPosition(glm::vec3& positionOut)
 	{
 	}

@@ -32,6 +32,7 @@ namespace nPhysics
 		virtual void SetMassType(int physicsType);
 		virtual void ApplyForce(const glm::vec3& force);
 		virtual void ApplyEngineForce(float force, int wheel);
+		virtual void ApplySteering(float value, int wheel);
 		virtual std::string GetPlaneType();
 
 		virtual int GetNumWheels();

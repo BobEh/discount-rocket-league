@@ -459,6 +459,24 @@ void cSphereObject::ApplyEngineForce(float force, int wheel)
 	this->_component->ApplyEngineForce(force, wheel);
 }
 
+void cSphereObject::ApplySteering(float value, int wheel)
+{
+	if (this->_component)
+	{
+		this->_component->ApplySteering(value, wheel);
+	}
+}
+
+void cSphereObject::SetIsFrontWheel(bool isFrontWheel)
+{
+	_isWheel = isFrontWheel;
+}
+
+bool cSphereObject::GetIsFrontWheel()
+{
+	return _isFrontWheel;
+}
+
 
 
 int cSphereObject::GetMassType()

@@ -37,6 +37,7 @@ namespace nPhysics
 
 		virtual int GetNumWheels() = 0;
 		virtual void GetWheelTransform(glm::mat4& transformOut, int wheel) = 0;
+		virtual void ApplySteering(float value, int wheel) = 0;
 
 		virtual void SetUniqueEntityId(int id) = 0;
 		virtual int GetUniqueEntityId() = 0;

@@ -17,6 +17,7 @@ namespace nPhysics
 		virtual void GetTransform(glm::mat4& transformOut);
 		virtual void ApplyForce(const glm::vec3& force);
 		virtual void ApplyEngineForce(float force, int wheel);
+		virtual void ApplySteering(float value, int wheel);
 		virtual void GetPosition(glm::vec3& positionOut);
 		virtual void SetPosition(glm::vec3 positionIn);
 		virtual void GetVelocity(glm::vec3& velocityOut);

@@ -34,6 +34,10 @@ void nPhysics::cPlaneComponent::ApplyEngineForce(float force, int wheel)
 
 }
 
+void nPhysics::cPlaneComponent::ApplySteering(float value, int wheel)
+{
+}
+
 void nPhysics::cPlaneComponent::GetVelocity(glm::vec3& velocityOut)
 {
 	velocityOut = velocity;

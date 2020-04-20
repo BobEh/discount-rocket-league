@@ -26,7 +26,10 @@ public:
 
 	virtual void ApplyForce(const glm::vec3& force) = 0;
 	virtual void ApplyEngineForce(float force, int wheel) = 0;
-	virtual void ApplyTorque(const glm::vec3& torque) = 0;
+	virtual void ApplySteering(float value, int wheel) = 0;
+	//virtual void ApplyTorque(const glm::vec3& torque) = 0;
+	virtual void SetIsFrontWheel(bool isFrontWheel) = 0;
+	virtual bool GetIsFrontWheel() = 0;
 
 	virtual std::string GetPlaneType() = 0;
 	virtual void SetPlaneType(std::string planeType) = 0;
