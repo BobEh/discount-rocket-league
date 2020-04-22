@@ -108,8 +108,12 @@ int main(void)
 		{
 			iObject* pCurrentObject = pFindObjectByFriendlyName("physicsSphere");
 			pCurrentObject->setPositionXYZ(glm::vec3(0.0f, 50.0f, 0.0f));
+			pCurrentObject->setVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+			pCurrentObject->ApplyForce(glm::vec3(0.0f, -1.0f, 2000.0f));
+			pCurrentObject->setIsVisible(true);
 			pCurrentObject = pFindObjectByFriendlyName("mainCar");
-			pCurrentObject->setPositionXYZ(glm::vec3(0.0f, 10.0f, 15.0f));
+			pCurrentObject->setPositionXYZ(glm::vec3(0.0f, 5.0f, 15.0f));
+			pCurrentObject->setVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
 			::g_pFlyCamera->eye = glm::vec3(0.0f, 50.0, 180.0);
 			bReLoadScene = false;
 		}

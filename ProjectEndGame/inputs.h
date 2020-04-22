@@ -485,7 +485,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//gEngineForce += 5.0f;
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = 4000.0f;
+					gEngineForce = 1500.0f;
 				}
 				else
 				{
@@ -502,7 +502,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//gEngineForce -= 5.0f;
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = -4000.0f;
+					gEngineForce = -1500.0f;
 				}
 				else
 				{
@@ -518,7 +518,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				}
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = -6000.0f;
+					gEngineForce = -2500.0f;
 				}
 				else
 				{

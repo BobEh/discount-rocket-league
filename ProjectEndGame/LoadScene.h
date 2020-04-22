@@ -102,6 +102,11 @@ int LoadMeshes()
 		std::cout << "Error: couldn't find the wall right ply." << std::endl;
 	}
 
+	cMesh homeNetMesh;
+	if (!pTheModelLoader->LoadPlyModel("assets/models/HomeNet.ply", homeNetMesh))
+	{
+		std::cout << "Error: couldn't find the home net ply." << std::endl;
+	}
 
 	cMesh wallLeftMesh;
 	if (!pTheModelLoader->LoadPlyModel("assets/models/Wall_Left.ply", wallLeftMesh))
@@ -251,6 +256,12 @@ int LoadMeshes()
 	{
 		std::cout << "Error: couldn't load debug cube into VAO." << std::endl;
 	}
+
+	sModelDrawInfo homeNetMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("homeNet",
+		homeNetMesh,		// Sphere mesh info
+		homeNetMeshInfo,
+		shaderProgID);
 
 	sModelDrawInfo cubeMeshInfo;
 	pTheVAOManager->LoadModelIntoVAO("cube",
@@ -1315,31 +1326,33 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	g_vec_pGameObjects.push_back(pHinge);
 	bulletPhysicsWorld->AddComponent(pHinge->GetComponent());
 
-	iObject* pHomeNet = pFactory->CreateObject("sphere", nPhysics::eComponentType::ghostBox);
-	pHomeNet->setMeshName("smallCube");
+	iObject* pHomeNet = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
+	pHomeNet->setMeshName("homeNet");
 	pHomeNet->setFriendlyName("homeNet");	// We use to search
-	pHomeNet->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	pHomeNet->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	float scaleNet = 20.0f;
-	pHomeNet->setScale(scaleNet * 0.5);
+	pHomeNet->setPositionXYZ(glm::vec3(40.0f, 0.0f, -200.0f));
+	pHomeNet->setRotationXYZ(glm::vec3(0.0f, glm::radians(180.0f), 0.0f));
+	float scaleNet = 0.15f;
+	pHomeNet->setScale(scaleNet);
 	pHomeNet->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	pHomeNet->setInverseMass(1.0f);
+	pHomeNet->setInverseMass(0.0f);
 	pHomeNet->setIsVisible(true);
-	pHomeNet->setIsWireframe(true);
-	nPhysics::sGhostBoxDef physicsGhostBox;
-	physicsGhostBox.Position = glm::vec3(0.0f, 20.0f, 0.0f);
-	physicsGhostBox.Width = glm::vec3(scaleNet);
-	nPhysics::iGhostBoxComponent* pGhostBoxPhysics = bulletPhysicsFactory->CreateGhostBox(physicsGhostBox);
-	g_vec_pGameComponentObjects.push_back(pGhostBoxPhysics);
-	pHomeNet->SetComponent(pGhostBoxPhysics);
-	pHomeNet->SetUniqueEntityId(HomeNetUniqueID);
+	pHomeNet->setIsWireframe(false);
+	pHomeNet->setTexture("white.bmp", 1);
+	pHomeNet->setTextureRatio(1, 1);
+	pHomeNet->setTransprancyValue(1.0f);
+	//nPhysics::sGhostBoxDef physicsGhostBox;
+	//physicsGhostBox.Position = glm::vec3(0.0f, 20.0f, 0.0f);
+	//physicsGhostBox.Width = glm::vec3(scaleNet);
+	//nPhysics::iGhostBoxComponent* pGhostBoxPhysics = bulletPhysicsFactory->CreateGhostBox(physicsGhostBox);
+	//g_vec_pGameComponentObjects.push_back(pGhostBoxPhysics);
+	//pHomeNet->SetComponent(pGhostBoxPhysics);
+	//pHomeNet->SetUniqueEntityId(HomeNetUniqueID);
 	g_vec_pEnvironmentObjects.push_back(pHomeNet);
-	bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
+	//bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
 
 	iObject* pMainCar = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
 	pMainCar->setMeshName("dominusGTBody");
 	pMainCar->setFriendlyName("mainCar");	// We use to search 
-	pMainCar->setPositionXYZ(glm::vec3(0.0f, 3.0f, 0.0f));
 	pMainCar->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 	float scaleCar = 1.0f;
 	pMainCar->setScale(scaleCar);
@@ -1352,9 +1365,9 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pMainCar->setTransprancyValue(1.0f);
 	g_vec_pCarObjects.push_back(pMainCar);
 	nPhysics::sVehicleDef physicsVehicle;
-	physicsVehicle.Position = glm::vec3(0.0f, 10.0f, 15.0f);
+	physicsVehicle.Position = glm::vec3(0.0f, 5.0f, 15.0f);
 	physicsVehicle.Width = glm::vec3(6.0f, 2.0f, 16.0f);
-	physicsVehicle.Mass = 300.0f;
+	physicsVehicle.Mass = 200.0f;
 	
 	for (int i = 0; i < 4; i++)
 	{

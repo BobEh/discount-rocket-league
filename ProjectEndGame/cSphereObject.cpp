@@ -347,9 +347,7 @@ void cSphereObject::setSpecularColour(glm::vec4 specularColourRGBA)
 }
 void cSphereObject::setVelocity(glm::vec3 velocityXYZ)
 {
-	EnterCriticalSection(&object_lock);
 	this->_velocity = velocityXYZ;
-	LeaveCriticalSection(&object_lock);
 }
 void cSphereObject::setVelocityX(float velocityX)
 {
@@ -554,7 +552,12 @@ int cSphereObject::GetUniqueEntityId()
 
 bool cSphereObject::IsCollidingWith(iObject* entityToTest)
 {
-	return this->_component->IsCollidingWith(entityToTest->GetUniqueEntityId());
+	float collisionDistance = 50.0f;
+	if (glm::distance(entityToTest->getPositionXYZ(), this->getPositionXYZ()) < collisionDistance)
+	{
+		return true;
+	}
+	return false;
 }
 
 int cSphereObject::GetNumWheels()

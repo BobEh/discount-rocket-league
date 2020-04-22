@@ -1177,6 +1177,7 @@ void DrawSecondPass()
 	//myPhysicsWorld->Update(deltaTime);
 	bulletPhysicsWorld->Update(deltaTime);
 	pRandomPhysics->IntegrationStep(g_vec_pBoostObjects, deltaTime);
+	pRandomPhysics->IntegrationStep(g_vec_pExplosionObjects, deltaTime);
 	gCoordinator->update(deltaTime);
 	gAIManager->update(deltaTime);
 
@@ -1190,6 +1191,14 @@ void DrawSecondPass()
 	while (g_vec_pBoostObjects.size() > 400.0f)
 	{
 		g_vec_pBoostObjects.erase(g_vec_pBoostObjects.begin() + 0);
+	}
+
+	for (int i = 0; i < g_vec_pExplosionObjects.size(); i++)
+	{
+		if (g_vec_pExplosionObjects.at(i)->getVelocity().x < 10.0f && g_vec_pExplosionObjects.at(i)->getVelocity().y < 10.0f && g_vec_pExplosionObjects.at(i)->getVelocity().z < 10.0f && g_vec_pExplosionObjects.at(i)->getVelocity().x > -10.0f && g_vec_pExplosionObjects.at(i)->getVelocity().y > -10.0f && g_vec_pExplosionObjects.at(i)->getVelocity().z > -10.0f)
+		{
+			g_vec_pExplosionObjects.erase(g_vec_pExplosionObjects.begin() + i);
+		}
 	}
 
 // 1. Disable the FBO
@@ -1283,7 +1292,24 @@ void DrawSecondPass()
 
 	if (theNet && theNet->IsCollidingWith(theBall))
 	{
-		bool itIsColliding = true;
+		theBall->setIsVisible(false);
+		for (int i = 0; i < 50; i++)
+		{
+			iObject* pExplosion = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
+			pExplosion->setMeshName("sphere");
+			pExplosion->setScale(1.0f);
+			pExplosion->setDebugColour(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+			pExplosion->setPositionXYZ(theBall->getPositionXYZ());
+			pExplosion->setVelocity(glm::vec3(randInRange(-40.0f, 40.0f), randInRange(-40.0f,40.0f), randInRange(-40.0f, 40.0f)));
+			pExplosion->setIsWireframe(false);
+			pExplosion->setInverseMass(1.0f);			// Sphere won't move
+			pExplosion->setIsVisible(true);
+			pExplosion->setTexture("red.bmp", 1);
+			pExplosion->setTextureRatio(1, 1);
+			pExplosion->setTransprancyValue(0.8f);
+			g_vec_pExplosionObjects.push_back(pExplosion);
+		}
+		bReLoadScene = true;
 	}
 
 	for (int index = 0; index != ::g_vec_pEnvironmentObjects.size(); index++)
@@ -1291,6 +1317,17 @@ void DrawSecondPass()
 		glm::mat4 matModel = glm::mat4(1.0f);
 
 		iObject* pCurrentObject = ::g_vec_pEnvironmentObjects[index];
+
+		DrawObject(matModel, pCurrentObject,
+			shaderProgID, pTheVAOManager);
+
+	}//for (int index...
+
+	for (int index = 0; index != ::g_vec_pExplosionObjects.size(); index++)
+	{
+		glm::mat4 matModel = glm::mat4(1.0f);
+
+		iObject* pCurrentObject = ::g_vec_pExplosionObjects[index];
 
 		DrawObject(matModel, pCurrentObject,
 			shaderProgID, pTheVAOManager);
