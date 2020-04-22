@@ -37,7 +37,7 @@ public:
 
 	virtual void SetUniqueEntityId(int id);
 	virtual int GetUniqueEntityId();
-	virtual bool IsCollidingWith(int uniqueEntityId);
+	virtual bool IsCollidingWith(iObject* entityToTest);
 
 	virtual void GetWheelTransform(glm::mat4& transformOut, int wheel);
 

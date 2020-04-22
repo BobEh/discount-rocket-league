@@ -1173,92 +1173,24 @@ void DrawSecondPass()
 {
 	iObject* pMainCharacter = pFindObjectByFriendlyName("physicsSphere");
 	iObject* pHomeNet = pFindObjectByFriendlyName("homeNet");
-	if (pHomeNet && pHomeNet->IsCollidingWith(pMainCharacter->getUniqueID()))
-	{
-		bool iAmCollidingRightNowBro = true;
-	}
-	std::string currentAnimationName = "Idle";
-	if (pMainCharacter)
-	{
-		currentAnimationName = pMainCharacter->getAnimation();
-	}
-	else 
-	drawSpace = false;
-	if (jumping)
-	{
-		jumpCount++;
-		if (jumpCount >= 150)
-		{
-			jumping = false;
-			jumpCount = 0;
-			currentAnimationName = "Idle";
-		}
-	}
-
-	if (rolling)
-	{
-		rollCount++;
-		if (rollCount >= 120)
-		{
-			rolling = false;
-			rollCount = 0;
-			currentAnimationName = "Idle";
-		}
-	}
-
-	if (attacking)
-	{
-		attackCount++;
-		if (attackCount >= 120)
-		{
-			attacking = false;
-			attackCount = 0;
-			currentAnimationName = "Idle";
-
-			for (int i = 0; i < g_vec_pGameObjects.size(); i++)
-			{
-				if (g_vec_pGameObjects.at(i)->getFriendlyName() == "mainCharacter")
-				{
-					continue;
-				}
-				else
-				{
-					g_vec_pGameObjects.at(i)->setTexture("green.bmp", 1);
-				}
-			}
-		}
-	}
-	// The whole scene is now drawn (to the FBO)
-
-
-	if (pMainCharacter != nullptr && currentAnimationName != "Jump" && currentAnimationName != "Roll" && currentAnimationName != "Dying" && currentAnimationName != "Attack")
-	{
-		if (pMainCharacter->getVelocity().z > 10.0f || pMainCharacter->getVelocity().x > 10.0f || pMainCharacter->getVelocity().z < -10.0f || pMainCharacter->getVelocity().x < -10.0f)
-		{
-			currentAnimationName = "Run";
-		}
-		else if (pMainCharacter->getVelocity().z > 1.0f || pMainCharacter->getVelocity().x > 1.0f || pMainCharacter->getVelocity().z < -1.0f || pMainCharacter->getVelocity().x < -1.0f)
-		{
-			currentAnimationName = "Walk";
-		}
-		//else if (pMainCharacter->getVelocity().y > 15.0f)
-		//{
-		//	currentAnimationName = "Jump";
-		//}
-		else if (pMainCharacter->getVelocity().y < -3.0f || pMainCharacter->getVelocity().y > 3.0f)
-		{
-			currentAnimationName = "Fall";
-		}
-		else
-		{
-			currentAnimationName = "Idle";
-		}
-	}
 
 	//myPhysicsWorld->Update(deltaTime);
 	bulletPhysicsWorld->Update(deltaTime);
+	pRandomPhysics->IntegrationStep(g_vec_pBoostObjects, deltaTime);
 	gCoordinator->update(deltaTime);
 	gAIManager->update(deltaTime);
+
+	for (int i = 0; i < g_vec_pBoostObjects.size(); i++)
+	{
+		if (g_vec_pBoostObjects.at(i)->getVelocity().x < 10.0f && g_vec_pBoostObjects.at(i)->getVelocity().y < 10.0f && g_vec_pBoostObjects.at(i)->getVelocity().z < 10.0f && g_vec_pBoostObjects.at(i)->getVelocity().x > -10.0f && g_vec_pBoostObjects.at(i)->getVelocity().y > -10.0f && g_vec_pBoostObjects.at(i)->getVelocity().z > -10.0f)
+		{
+			g_vec_pBoostObjects.erase(g_vec_pBoostObjects.begin() + i);
+		}
+	}
+	while (g_vec_pBoostObjects.size() > 400.0f)
+	{
+		g_vec_pBoostObjects.erase(g_vec_pBoostObjects.begin() + 0);
+	}
 
 // 1. Disable the FBO
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -1324,35 +1256,6 @@ void DrawSecondPass()
 	// set pass number back to 0 to render the rest of the scene
 	glUniform1i(passNumber_UniLoc, 0);
 
-	for (int index = 0; index != ::g_vec_pCharacterObjects.size(); index++)
-	{
-		glm::mat4 matModel = glm::mat4(1.0f);
-
-		iObject* pCurrentObject = ::g_vec_pCharacterObjects[index];
-
-		//*******************************
-		//	FACE FORWARD
-
-		glm::vec3 currentVelocity;
-		pCurrentObject->GetVelocity(currentVelocity);
-		if (currentVelocity.x > 0.0f && currentVelocity.y > 0.0f && currentVelocity.z > 0.0f)
-		{
-			glm::vec3 normalizedVelocity = glm::normalize(currentVelocity);
-			//normalizedVelocity.z *= -1.0f;
-			glm::quat orientation = glm::quatLookAt(normalizedVelocity, glm::vec3(0.0f, 1.0f, 0.0f));
-			orientation.x = 0.0f;
-			orientation.y *= -1.0f;
-			orientation.z = 0.0f;
-			pCurrentObject->setRotationXYZ(orientation);
-		}
-
-		//*********************************
-
-		DrawObject(matModel, pCurrentObject,
-			shaderProgID, pTheVAOManager);
-
-	}//for (int index...
-
 	for (int index = 0; index != ::g_vec_pGameObjects.size(); index++)
 	{
 		glm::mat4 matModel = glm::mat4(1.0f);
@@ -1363,6 +1266,25 @@ void DrawSecondPass()
 			shaderProgID, pTheVAOManager);
 
 	}//for (int index...
+
+	for (int index = 0; index != g_vec_pBoostObjects.size(); index++)
+	{
+ 		glm::mat4 matModel = glm::mat4(1.0f);
+
+		iObject* pCurrentObject = g_vec_pBoostObjects[index];
+
+		DrawObject(matModel, pCurrentObject,
+			shaderProgID, pTheVAOManager);
+
+	}//for (int index...
+
+	iObject* theBall = pFindObjectByFriendlyName("physicsSphere");
+	iObject* theNet = pFindObjectByFriendlyName("homeNet");
+
+	if (theNet && theNet->IsCollidingWith(theBall))
+	{
+		bool itIsColliding = true;
+	}
 
 	for (int index = 0; index != ::g_vec_pEnvironmentObjects.size(); index++)
 	{
@@ -1394,6 +1316,31 @@ void DrawSecondPass()
 
 			DrawObject(wheelTrans, pCurrentWheel, shaderProgID, pTheVAOManager);
 		}
+		if (bIsBDown)
+		{
+			gEngineForce = -6000.0f;
+			glm::vec3 currentVelocity = pCurrentObject->getVelocity();
+			glm::vec3 currentPosition = pCurrentObject->getPositionXYZ();
+			currentVelocity *= -100.0f;
+			for (int i = 0; i < 10; i++)
+			{
+				glm::vec3 velocityOffset = glm::vec3(randInRange(-1.0f, 1.0f), randInRange(-1.0f, 1.0f), randInRange(-1.0f, 1.0f));
+				iObject* pBoost = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
+				pBoost->setMeshName("sphere");
+				pBoost->setScale(0.2f);
+				pBoost->setDebugColour(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+				glm::vec3 desiredVelocity = glm::vec3(currentVelocity.x + velocityOffset.x, velocityOffset.y, currentVelocity.z + velocityOffset.z);
+				pBoost->setPositionXYZ(pCurrentObject->getPositionXYZ());
+				pBoost->setVelocity(currentVelocity + velocityOffset);
+				pBoost->setIsWireframe(false);
+				pBoost->setInverseMass(1.0f);			// Sphere won't move
+				pBoost->setIsVisible(true);
+				pBoost->setTexture("red.bmp", 1);
+				pBoost->setTextureRatio(1, 1);
+				pBoost->setTransprancyValue(0.8f);
+				g_vec_pBoostObjects.push_back(pBoost);
+			}
+		}
 		pCurrentObject->ApplyEngineForce(gEngineForce, 2);
 		pCurrentObject->ApplyEngineForce(gEngineForce, 3);
 
@@ -1402,13 +1349,19 @@ void DrawSecondPass()
 		//{
 		//	gEngineForce = 0.0f;
 		//}
-		if (gEngineForce > 100.0f)
+		if (!bIsSDown)
 		{
-			gEngineForce -= 100.0f;
+			if (gEngineForce > 10.0f)
+			{
+				gEngineForce -= 200.0f;
+			}
 		}
-		if (gEngineForce < -100.0f)
+		if (!bIsWDown)
 		{
-			gEngineForce += 100.0f;
+			if (gEngineForce < -10.0f)
+			{
+				gEngineForce += 200.0f;
+			}
 		}
 
 		// Apply steering
@@ -1422,34 +1375,23 @@ void DrawSecondPass()
 			}
 		}
 
-		//if (gTurningRadius > 0.0f)
-		//{
-		//	gTurningRadius -= 1.0f;
-		//}
-		//if (gTurningRadius < 0.0f)
-		//{
-		//	gTurningRadius += 1.0f;
-		//}
-	}
-
-	for (int index = 0; index != g_vec_pClothObjects.size(); index++)
-	{
-		iObject* pCurrentObject = ::g_vec_pClothObjects[index];
-
-		size_t numNodes = pCurrentObject->GetComponent()->NumNodes();
-
-		for (int i = 0; i < numNodes; i++)
+		if (!bIsADown)
 		{
-			glm::mat4 matModel = glm::mat4(1.0f);
-			float scale = 1.0f;
-			glm::vec3 position = glm::vec3(1.0f);
-			pCurrentObject->GetComponent()->GetNodeRadius(i, scale);
-			pCurrentObject->GetComponent()->GetNodePosition(i, position);
-			matModel = glm::scale(matModel, glm::vec3(scale));
-			matModel = glm::translate(matModel, position);
-			DrawObject(matModel, pCurrentObject, shaderProgID, pTheVAOManager);
+			if (gTurningRadius > 0.0f)
+			{
+				gTurningRadius -= 3.0f;
+			}
+		}
+		if (!bIsDDown)
+		{
+			if (gTurningRadius < 0.0f)
+			{
+				gTurningRadius += 3.0f;
+			}
 		}
 	}
+
+
 
 	glm::mat4 skyMatModel2 = glm::mat4(1.0f);
 
@@ -1459,8 +1401,5 @@ void DrawSecondPass()
 	{
 		DrawDebugSpheres();
 	}// if (bLightDebugSheresOn) 
-	if (pMainCharacter)
-	{
-		pMainCharacter->setAnimation(currentAnimationName);
-	}
+
 }

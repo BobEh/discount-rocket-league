@@ -45,7 +45,7 @@ public:
 
 	virtual void SetUniqueEntityId(int id);
 	virtual int GetUniqueEntityId();
-	virtual bool IsCollidingWith(int uniqueEntityId);
+	virtual bool IsCollidingWith(iObject* entityToTest);
 
 	virtual int GetNumWheels();
 	virtual void SetIsWheel(bool isWheel);

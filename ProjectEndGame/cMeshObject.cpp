@@ -401,9 +401,9 @@ int cMeshObject::GetUniqueEntityId()
 	}
 }
 
-bool cMeshObject::IsCollidingWith(int uniqueEntityId)
+bool cMeshObject::IsCollidingWith(iObject* entityToTest)
 {
-	return this->_component->IsCollidingWith(uniqueEntityId);
+	return this->_component->IsCollidingWith(entityToTest->GetUniqueEntityId());
 }
 
 int cMeshObject::GetNumWheels()

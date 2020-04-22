@@ -69,6 +69,41 @@ bool isCtrlDown(GLFWwindow* window)
 	return false;
 }
 
+bool isADown(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_A)) { return true; }
+	
+	return false;
+}
+
+bool isDDown(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_D)) { return true; }
+	// both are up
+	return false;
+}
+
+bool isWDown(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_W)) { return true; }
+
+	return false;
+}
+
+bool isSDown(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_S)) { return true; }
+	// both are up
+	return false;
+}
+
+bool isBDown(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_B)) { return true; }
+	// both are up
+	return false;
+}
+
 bool isAltDown(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_LEFT_ALT)) { return true; }
@@ -185,22 +220,22 @@ void ProcessAsyncKeys(GLFWwindow* window)
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			//			g_CameraEye.z += cameraSpeed;
-			::g_pFlyCamera->MoveForward_Z(+cameraMoveSpeed);
+			::g_pFlyCamera->MoveForward_Z(-cameraMoveSpeed);
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)	// "backwards"
 		{
 			//			g_CameraEye.z -= cameraSpeed;
-			::g_pFlyCamera->MoveForward_Z(-cameraMoveSpeed);
+			::g_pFlyCamera->MoveForward_Z(+cameraMoveSpeed);
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)	// "left"
 		{
 			//			g_CameraEye.x -= cameraSpeed;
-			::g_pFlyCamera->MoveLeftRight_X(-cameraMoveSpeed);
+			::g_pFlyCamera->MoveLeftRight_X(+cameraMoveSpeed);
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)	// "right"
 		{
 			//			g_CameraEye.x += cameraSpeed;
-			::g_pFlyCamera->MoveLeftRight_X(+cameraMoveSpeed);
+			::g_pFlyCamera->MoveLeftRight_X(-cameraMoveSpeed);
 		}
 		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)	// "up"
 		{
@@ -268,88 +303,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		}
 
 	}
-
-	if (isShiftKeyDownByAlone(mods))
-	{
-		if (key == GLFW_KEY_0 && action == GLFW_PRESS)
-		{
-			currentRender = renderTag::none;
-		}
-		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-		{
-			currentRender = renderTag::AI;
-		}
-		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-		{
-			currentRender = renderTag::Platform;
-		}
-		if (key == GLFW_KEY_9)
-		{
-			bLightDebugSheresOn = false;
-		}
-		if (key == GLFW_KEY_0)
-		{
-			bLightDebugSheresOn = true;
-		}
-		// switch lights to control
-		if (key == GLFW_KEY_M)
-		{
-			currentLight = 0;		// Move the camera -0.01f units
-		}
-		// move the light
-		if (key == GLFW_KEY_A)
-		{
-			pLightsVec.at(0)->_PositionX -= CAMERASPEED;
-		}
-		if (key == GLFW_KEY_D)
-		{
-			pLightsVec.at(0)->_PositionX += CAMERASPEED;
-		}
-
-		// Move the camera (Q & E for up and down, along the y axis)
-		if (key == GLFW_KEY_Q)
-		{
-			pLightsVec.at(0)->_PositionY -= CAMERASPEED;
-		}
-		if (key == GLFW_KEY_E)
-		{
-			pLightsVec.at(0)->_PositionY += CAMERASPEED;
-		}
-
-		// Move the camera (W & S for towards and away, along the z axis)
-		if (key == GLFW_KEY_W)
-		{
-			pLightsVec.at(0)->_PositionZ -= CAMERASPEED;
-		}
-		if (key == GLFW_KEY_S)
-		{
-			pLightsVec.at(0)->_PositionZ += CAMERASPEED;
-		}
-
-		if (key == GLFW_KEY_K)
-		{
-			for (int i = 0; i < pLightsVec.size(); i++)
-			{
-				std::string currentNodeName = pLightsVec.at(i)->getNodeName();
-				xml_node LightToChange = lightData.child(currentNodeName.c_str());
-				std::vector<std::string> changeData = pLightsVec.at(i)->getAllDataStrings();
-
-				int index = 0;
-				for (xml_node dataNode = LightToChange.child("PositionX"); dataNode; dataNode = dataNode.next_sibling())
-				{
-					dataNode.last_child().set_value(changeData.at(index).c_str());
-					index++;
-				}
-			}
-			fileChanged = true;
-		}
-
-		if (key == GLFW_KEY_9)
-		{
-			bLightDebugSheresOn = false;
-		}
-
-	}//if (isShiftKeyDownByAlone(mods))
 
 	if (isCtrlKeyDownByAlone(mods))
 	{
@@ -451,9 +404,45 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		else
 		{
 			pCurrentObject = pFindObjectByFriendlyName("mainCar");
+			if (key == GLFW_KEY_R && action == GLFW_PRESS)
+			{
+				bReLoadScene = true;
+			}
 			if (!pCurrentObject)
 			{
 				return;
+			}
+			if (isBDown(window))
+			{
+				bIsBDown = true;
+			}
+			if (!isBDown(window))
+			{
+				bIsBDown = false;
+			}
+			if (isADown(window))
+			{
+				bIsADown = true;
+			}
+			if (!isADown(window))
+			{
+				bIsADown = false;
+			}
+			if (isWDown(window))
+			{
+				bIsWDown = true;
+			}
+			if (!isWDown(window))
+			{
+				bIsWDown = false;
+			}
+			if (isSDown(window))
+			{
+				bIsSDown = true;
+			}
+			if (!isSDown(window))
+			{
+				bIsSDown = false;
 			}
 			if (key == GLFW_KEY_A)
 			{
@@ -461,8 +450,16 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
 				if (gTurningRadius < 45.0f)
 				{
-					gTurningRadius += 2.0f;
+					gTurningRadius += 3.0f;
 				}
+			}
+			if (isDDown(window))
+			{
+				bIsDDown = true;
+			}
+			if (!isDDown(window))
+			{
+				bIsDDown = false;
 			}
 			if (key == GLFW_KEY_D)
 			{
@@ -470,7 +467,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//pCurrentObject->setVelocity(glm::vec3(pCurrentObject->getVelocity().x, 0.0f, 20.0f));
 				if (gTurningRadius > -45.0f)
 				{
-					gTurningRadius -= 2.0f;
+					gTurningRadius -= 3.0f;
 				}
 			}
 			if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
@@ -488,7 +485,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//gEngineForce += 5.0f;
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = 2000.0f;
+					gEngineForce = 4000.0f;
 				}
 				else
 				{
@@ -505,11 +502,75 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 				//gEngineForce -= 5.0f;
 				if (pCurrentObject->getPositionXYZ().y < 5.0f)
 				{
-					gEngineForce = -2000.0f;
+					gEngineForce = -4000.0f;
 				}
 				else
 				{
 					glm::quat rotation = glm::quat(glm::vec3(glm::radians(1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
+				}
+			}
+			if (key == GLFW_KEY_A && key == GLFW_KEY_W)
+			{
+				if (gTurningRadius < 45.0f)
+				{
+					gTurningRadius += 3.0f;
+				}
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = -6000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
+				}
+			}
+			if (key == GLFW_KEY_A && key == GLFW_KEY_S)
+			{
+				if (gTurningRadius < 45.0f)
+				{
+					gTurningRadius += 3.0f;
+				}
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = 6000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(-1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
+				}
+			}
+			if (key == GLFW_KEY_D && key == GLFW_KEY_W)
+			{
+				if (gTurningRadius > -45.0f)
+				{
+					gTurningRadius -= 3.0f;
+				}
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = -6000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(1.5f), 0.0f, 0.0f));
+					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
+				}
+			}
+			if (key == GLFW_KEY_D && key == GLFW_KEY_S)
+			{
+				if (gTurningRadius > -45.0f)
+				{
+					gTurningRadius -= 3.0f;
+				}
+				if (pCurrentObject->getPositionXYZ().y < 5.0f)
+				{
+					gEngineForce = 6000.0f;
+				}
+				else
+				{
+					glm::quat rotation = glm::quat(glm::vec3(glm::radians(-1.5f), 0.0f, 0.0f));
 					pCurrentObject->setRotationXYZ(pCurrentObject->getRotationXYZ() * rotation);
 				}
 			}

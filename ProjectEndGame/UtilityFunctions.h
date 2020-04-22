@@ -567,6 +567,14 @@ iObject* pFindObjectByFriendlyName(std::string name)
 			return ::g_vec_pPlatformExplosionObjects[index];
 		}
 	}
+	for (unsigned int index = 0; index != g_vec_pExtraObjects.size(); index++)
+	{
+		if (::g_vec_pExtraObjects[index]->getFriendlyName() == name)
+		{
+			// Found it!!
+			return ::g_vec_pExtraObjects[index];
+		}
+	}
 	// Didn't find it
 	return NULL;
 }

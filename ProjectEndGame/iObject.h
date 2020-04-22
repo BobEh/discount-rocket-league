@@ -46,7 +46,7 @@ public:
 	virtual void SetIsWheel(bool isWheel) = 0;
 	virtual bool GetIsWheel() = 0;
 
-	virtual bool IsCollidingWith(int uniqueEntityId) = 0;
+	virtual bool IsCollidingWith(iObject* entityToTest) = 0;
 
 	//getters
 	virtual std::string getAnimation() = 0;

@@ -53,7 +53,7 @@ int main(void)
 	iObject* pCurrentObject = pFindObjectByFriendlyName("mainCar");
 
 	::g_pFlyCamera = new cFlyCamera();
-	::g_pFlyCamera->eye = glm::vec3(0.0f, 80.0, -80.0);
+	::g_pFlyCamera->eye = glm::vec3(0.0f, 80.0, 80.0);
 	theAICamera = new cFlyCamera();
 	theAICamera->eye = glm::vec3(0.0f, 200.0, -50.0);
 	thePlatformCamera = new cFlyCamera();
@@ -104,6 +104,15 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
+		if (bReLoadScene)
+		{
+			iObject* pCurrentObject = pFindObjectByFriendlyName("physicsSphere");
+			pCurrentObject->setPositionXYZ(glm::vec3(0.0f, 50.0f, 0.0f));
+			pCurrentObject = pFindObjectByFriendlyName("mainCar");
+			pCurrentObject->setPositionXYZ(glm::vec3(0.0f, 10.0f, 15.0f));
+			::g_pFlyCamera->eye = glm::vec3(0.0f, 50.0, 180.0);
+			bReLoadScene = false;
+		}
 		SetDeltaTime();
 
 		ProcessAsyncKeys(window);
@@ -179,9 +188,9 @@ int main(void)
 		//                                                                
 
 		//AIv = glm::lookAt(theAICamera->eye, glm::vec3(0.0f, 0.0f, 0.0f), theAICamera->getUpVector());
-		glUniform1f(renderAI_UL, true);
-		DrawAIFBO();
-		glUniform1f(renderAI_UL, false);
+		//glUniform1f(renderAI_UL, true);
+		//DrawAIFBO();
+		//glUniform1f(renderAI_UL, false);
 
 
 		//    _____  _       _    __                       ______ _          _     _____              
@@ -198,9 +207,9 @@ int main(void)
 		int currentNode = 4;
 		colVals.insert(std::make_pair(std::make_pair(c,r),currentNode));
 		//Pv = glm::lookAt(thePlatformCamera->eye, glm::vec3(thePlatformCamera->eye.x, thePlatformCamera->eye.y, 0.0f), thePlatformCamera->getUpVector());
-		glUniform1f(renderPlatform_UL, true);
-		DrawPlatformFBO();
-		glUniform1f(renderPlatform_UL, false);
+		//glUniform1f(renderPlatform_UL, true);
+		//DrawPlatformFBO();
+		//glUniform1f(renderPlatform_UL, false);
 
 		//     _____                          _   _____              
 		//    / ____|                        | | |  __ \             

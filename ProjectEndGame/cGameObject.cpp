@@ -319,9 +319,9 @@ int cGameObject::GetUniqueEntityId()
 	}
 }
 
-bool cGameObject::IsCollidingWith(int uniqueEntityId)
+bool cGameObject::IsCollidingWith(iObject* entityToTest)
 {
-	return this->_component->IsCollidingWith(uniqueEntityId);
+	return false;
 }
 
 void cGameObject::GetWheelTransform(glm::mat4& transformOut, int wheel)

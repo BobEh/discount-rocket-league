@@ -92,18 +92,25 @@ namespace nPhysics
 	}
 	void cVehicleComponent::GetPosition(glm::vec3& positionOut)
 	{
-		positionOut = nConvert::ToSimple(mBody->getCenterOfMassPosition());
-
-		
+		positionOut = nConvert::ToSimple(mBody->getCenterOfMassPosition());		
 	}
 	void cVehicleComponent::SetPosition(glm::vec3 positionIn)
 	{
+		btTransform initialTransform;
+
+		initialTransform.setOrigin(nConvert::ToBullet(positionIn));
+		btQuaternion rotation = btQuaternion(0.0f, 0.0f, 0.0f);
+		initialTransform.setRotation(rotation);
+
+		mBody->setWorldTransform(initialTransform);
+		mBody->getMotionState()->setWorldTransform(initialTransform);
 	}
 	void cVehicleComponent::GetScale(float& scaleOut)
 	{
 	}
 	void cVehicleComponent::GetVelocity(glm::vec3& velocityOut)
 	{
+		velocityOut = nConvert::ToSimple(mBody->getAngularVelocity());
 	}
 	int cVehicleComponent::GetMassType()
 	{

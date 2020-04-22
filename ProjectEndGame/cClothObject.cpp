@@ -357,7 +357,7 @@ int cClothObject::GetUniqueEntityId()
 	return 0;
 }
 
-bool cClothObject::IsCollidingWith(int uniqueEntityId)
+bool cClothObject::IsCollidingWith(iObject* entityToTest)
 {
 	return false;
 }

@@ -21,6 +21,10 @@ nPhysics::iPhysicsFactory* bulletPhysicsFactory;
 nPhysics::iPhysicsWorld* bulletPhysicsWorld;
 cPhysics* pAIPhsyics;
 cPhysics* pPlatformPhysics;
+cPhysics* pRandomPhysics;
+
+int BallUniqueID = 22;
+int HomeNetUniqueID = 12;
 
 cBasicTextureManager* g_pTextureManager = NULL;
 
@@ -106,7 +110,12 @@ std::vector<iObject*> g_vec_pPlatformCharacterObjects;
 std::vector<iObject*> g_vec_pPlatformExplosionObjects;
 std::vector<iObject*> g_vec_pExplosionObjects;
 std::vector<iObject*> g_vec_pPlaceHolderObjects;
+std::vector<iObject*> g_vec_pExtraObjects;
+std::vector<iObject*> g_vec_pBoostObjects;
 std::map<std::string /*FriendlyName*/, iObject*> g_map_GameObjectsByFriendlyName;
+
+// Vector of object vectors
+std::vector<std::vector<iObject*>> g_motherOfAllVectors;
 
 //AI
 Coordinator* gCoordinator;
@@ -120,6 +129,13 @@ int platformAttackCount = 0;
 
 float gEngineForce = 0.0f;
 float gTurningRadius = 0.0f;
+
+bool bIsADown = false;
+bool bIsDDown = false;
+bool bIsWDown = false;
+bool bIsSDown = false;
+bool bIsBDown = false;
+bool bReLoadScene = false;
 
 int enemyCount1 = 0;
 int enemyCount2 = 0;

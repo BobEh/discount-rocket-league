@@ -94,7 +94,13 @@ void nPhysics::cBallComponent::GetPosition(glm::vec3& positionOut)
 
 void nPhysics::cBallComponent::SetPosition(glm::vec3 positionIn)
 {
-	position = positionIn;
+	btTransform initialTransform;
+
+	initialTransform.setOrigin(nConvert::ToBullet(positionIn));
+	initialTransform.setRotation(btQuaternion(0.0f,0.0f,0.0f));
+
+	mBody->setWorldTransform(initialTransform);
+	mBody->getMotionState()->setWorldTransform(initialTransform);
 }
 
 void nPhysics::cBallComponent::GetVelocity(glm::vec3& velocityOut)
@@ -119,11 +125,12 @@ std::string nPhysics::cBallComponent::GetPlaneType()
 
 void nPhysics::cBallComponent::SetUniqueEntityId(int id)
 {
+	mBody->setUserIndex(id);
 }
 
 int nPhysics::cBallComponent::GetUniqueEntityId()
 {
-	return 0;
+	return mBody->getUserIndex();
 }
 
 int nPhysics::cBallComponent::GetNumWheels()

@@ -43,7 +43,7 @@ void cPhysics::IntegrationStep(std::vector<iObject*>& vec_pGameObjects, float de
 
 
 			pCurObj->setVelocity(pCurObj->getVelocity() + pCurObj->getAccel() * deltaTime);
-			pCurObj->MoveInRelativeDirection(pCurObj->getVelocity() * deltaTime);
+			//pCurObj->MoveInRelativeDirection(pCurObj->getVelocity() * deltaTime);
 			//		// Or you can do this...
 			//		CurObj.velocity += CurObj.accel * deltaTime;
 
@@ -57,7 +57,7 @@ void cPhysics::IntegrationStep(std::vector<iObject*>& vec_pGameObjects, float de
 
 			//glm::vec4 testPointInModel = matModel * glm::vec4(pCurObj->getPositionXYZ(), 1.0f);
 
-			//pCurObj->setPositionXYZ(pCurObj->getPositionXYZ() + pCurObj->getVelocity() * deltaTime);
+			pCurObj->setPositionXYZ(pCurObj->getPositionXYZ() + pCurObj->getVelocity() * deltaTime);
 			//pCurObj->MoveInRelativeDirection(pCurObj->getPositionXYZ() + pCurObj->getVelocity() * deltaTime);
 			
 		}
@@ -67,26 +67,26 @@ void cPhysics::IntegrationStep(std::vector<iObject*>& vec_pGameObjects, float de
 
 			if (pCurObj->getVelocity().x > 0.0f)
 			{
-				if (pCurObj->getAccel().x < 0.0f)
-					pCurObj->setAccel(glm::vec3(0.0f, pCurObj->getAccel().y, pCurObj->getAccel().z));
+				//if (pCurObj->getAccel().x < 0.0f)
+					//pCurObj->setAccel(glm::vec3(0.0f, pCurObj->getAccel().y, pCurObj->getAccel().z));
 
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x - 0.1f, pCurObj->getAccel().y, pCurObj->getAccel().z));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x - 0.1f, pCurObj->getAccel().y, pCurObj->getAccel().z));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x - 0.1f, pCurObj->getVelocity().y, pCurObj->getVelocity().z));
 			}
 			if (pCurObj->getVelocity().y > 0.0f)
 			{
-				if (pCurObj->getAccel().y < 0.0f)
-					pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, 0.0f, pCurObj->getAccel().z));
+				//if (pCurObj->getAccel().y < 0.0f)
+					//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, 0.0f, pCurObj->getAccel().z));
 
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y - 0.1f, pCurObj->getAccel().z));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y - 0.1f, pCurObj->getAccel().z));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x, pCurObj->getVelocity().y - 0.1f, pCurObj->getVelocity().z));
 			}
 			if (pCurObj->getVelocity().z > 0.0f)
 			{
-				if (pCurObj->getAccel().z < 0.0f)
-					pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, 0.0f));
+				//if (pCurObj->getAccel().z < 0.0f)
+					//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, 0.0f));
 
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, pCurObj->getAccel().z - 0.1f));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, pCurObj->getAccel().z - 0.1f));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x, pCurObj->getVelocity().y, pCurObj->getVelocity().z - 0.1f));
 			}
 
@@ -95,26 +95,26 @@ void cPhysics::IntegrationStep(std::vector<iObject*>& vec_pGameObjects, float de
 			{
 				if (pCurObj->getAccel().x > 0.0f)
 				{
-					pCurObj->setAccel(glm::vec3(0.0f, pCurObj->getAccel().y, pCurObj->getAccel().z));
+					//pCurObj->setAccel(glm::vec3(0.0f, pCurObj->getAccel().y, pCurObj->getAccel().z));
 					//pCurObj->setVelocity(glm::vec3(0.0f, pCurObj->getVelocity().y, pCurObj->getVelocity().z));
 				}
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x + 0.1f, pCurObj->getAccel().y, pCurObj->getAccel().z));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x + 0.1f, pCurObj->getAccel().y, pCurObj->getAccel().z));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x + 0.1f, pCurObj->getVelocity().y, pCurObj->getVelocity().z));
 			}
 			if (pCurObj->getVelocity().y < 0.0f)
 			{
-				if (pCurObj->getAccel().y > 0.0f)
-					pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, 0.0f, pCurObj->getAccel().z));
+				//if (pCurObj->getAccel().y > 0.0f)
+					//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, 0.0f, pCurObj->getAccel().z));
 
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y + 0.1f, pCurObj->getAccel().z));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y + 0.1f, pCurObj->getAccel().z));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x, pCurObj->getVelocity().y + 0.1f, pCurObj->getVelocity().z));
 			}
 			if (pCurObj->getVelocity().z < 0.0f)
 			{
-				if (pCurObj->getAccel().z > 0.0f)
-					pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, 0.0f));
+				//if (pCurObj->getAccel().z > 0.0f)
+					//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, 0.0f));
 
-				pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, pCurObj->getAccel().z + 0.1f));
+				//pCurObj->setAccel(glm::vec3(pCurObj->getAccel().x, pCurObj->getAccel().y, pCurObj->getAccel().z + 0.1f));
 				pCurObj->setVelocity(glm::vec3(pCurObj->getVelocity().x, pCurObj->getVelocity().y, pCurObj->getVelocity().z + 0.1f));
 			}
 		}

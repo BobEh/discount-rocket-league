@@ -456,7 +456,10 @@ void cSphereObject::ApplyForce(const glm::vec3& force)
 
 void cSphereObject::ApplyEngineForce(float force, int wheel)
 {
-	this->_component->ApplyEngineForce(force, wheel);
+	if (this->_component)
+	{
+		this->_component->ApplyEngineForce(force, wheel);
+	}
 }
 
 void cSphereObject::ApplySteering(float value, int wheel)
@@ -549,9 +552,9 @@ int cSphereObject::GetUniqueEntityId()
 	}
 }
 
-bool cSphereObject::IsCollidingWith(int uniqueEntityId)
+bool cSphereObject::IsCollidingWith(iObject* entityToTest)
 {
-	return this->_component->IsCollidingWith(uniqueEntityId);
+	return this->_component->IsCollidingWith(entityToTest->GetUniqueEntityId());
 }
 
 int cSphereObject::GetNumWheels()

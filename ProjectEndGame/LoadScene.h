@@ -10,6 +10,7 @@ int LoadPhysics()
 {
 	pAIPhsyics = new cPhysics();
 	pPlatformPhysics = new cPhysics();
+	pRandomPhysics = new cPhysics();
 	//find the DLL for creating the physics factory
 	hGetMyDLL = LoadLibraryA("MyPhysicsWrapper.dll");
 	hGetBulletDLL = LoadLibraryA("BulletPhysicsWrapper.dll");
@@ -201,6 +202,9 @@ int LoadMeshes()
 	cMesh sphereMesh;
 	pTheModelLoader->LoadPlyModel("assets/models/Sphere_Radius_1_XYZ_n_uv.ply", sphereMesh);
 
+	cMesh soccerBallMesh;
+	pTheModelLoader->LoadPlyModel("assets/models/Soccer_Ball.ply", soccerBallMesh);
+
 	cMesh hingeMesh;
 	if (!pTheModelLoader->LoadPlyModel("assets/models/Hinge_Block.ply", hingeMesh))
 	{
@@ -231,6 +235,12 @@ int LoadMeshes()
 	pTheVAOManager->LoadModelIntoVAO("sphere",
 		sphereMesh,		// Sphere mesh info
 		sphereMeshInfo,
+		shaderProgID);
+
+	sModelDrawInfo soccerBallMeshInfo;
+	pTheVAOManager->LoadModelIntoVAO("soccerBall",
+		soccerBallMesh,		// Sphere mesh info
+		soccerBallMeshInfo,
 		shaderProgID);
 
 	sModelDrawInfo cubeMeshDebugInfo;
@@ -359,6 +369,10 @@ int LoadTextures()
 	g_pTextureManager->Create2DTextureFromBMPFile("moon.bmp", true);
 
 	g_pTextureManager->Create2DTextureFromBMPFile("WaveDecal.bmp", true);
+
+	g_pTextureManager->Create2DTextureFromBMPFile("SoccerBall.bmp", true);
+
+	g_pTextureManager->Create2DTextureFromBMPFile("fire.bmp", true);
 
 	::g_pTextureManager->Create2DTextureFromBMPFile("water_800.bmp", true);
 
@@ -678,114 +692,10 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	gAIManager = new AIManager();
 	gCoordinator = new Coordinator();
 
-	//Objects
-	//iObject* pCloth = pFactory->CreateObject("cloth", nPhysics::eComponentType::cloth);
-	//pCloth->setMeshName("sphere");
-	//pCloth->setFriendlyName("cloth");	// We use to search 
-	//pCloth->setPositionXYZ(glm::vec3(0.0f, 50.0f, 0.0f));
-	//pCloth->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pCloth->setScale(0.2f);
-	//pCloth->setObjectColourRGBA(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	////pCloth->setDebugColour(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	//pCloth->setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pCloth->setAccel(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pCloth->set_SPHERE_radius(1.0f);
-	//pCloth->setInverseMass(1.0f);
-	//pCloth->setTexture("StoneTex_1024.bmp", 1);
-	//pCloth->setTextureRatio(1, 1);
-	//pCloth->SetPlaneType("floor");
-	//pCloth->setTransprancyValue(1.0f);
-	//pCloth->setIsVisible(true);
-	//pCloth->setIsWireframe(false);
-	////pSphere->SetMassType(0);
-	//nPhysics::sClothDef physicsCloth;
-	//physicsCloth.CornerA = glm::vec3(5.0f, 20.0f, 0.0f);
-	//physicsCloth.CornerB = glm::vec3(-20.0f, 20.0f, 0.0f);
-	//physicsCloth.DownDirection = glm::vec3(0.0f, 1.0f, 0.0f);
-	//physicsCloth.NodeMass = 0.4f;
-	//physicsCloth.NumNodesAcross = 40;
-	//physicsCloth.NumNodesDown = 20;
-	//physicsCloth.SpringConstant = 25.0f;
-	//physicsCloth.NodeRadius = 1.0f;
-	//nPhysics::iClothComponent* pClothPhysics = myPhysicsFactory->CreateCloth(physicsCloth);
-	//g_vec_pGameComponentObjects.push_back(pClothPhysics);
-	//pCloth->SetComponent(pClothPhysics);
-	//cMesh clothMesh;
-	//size_t numNodes = pClothPhysics->NumNodes();
-	//sPlyVertexXYZ_N_UV vertex;
-	//for (size_t idx = 0; idx < numNodes; idx++)
-	//{		
-	//	glm::vec3 triPosition = glm::vec3(0.0f);
-	//	pClothPhysics->GetNodePosition(idx, triPosition);
-	//	vertex.x = triPosition.x;
-	//	vertex.y = triPosition.y;
-	//	vertex.z = triPosition.z;
-	//	clothMesh.vecVertices.push_back(vertex);
-	//}
-	//sModelDrawInfo clothMeshInfo;
-	//pTheVAOManager->LoadModelIntoVAO("clothMesh", clothMesh, clothMeshInfo, shaderProgID);
-	////pCloth->setMeshName("clothMesh");
-	//::g_vec_pClothObjects.push_back(pCloth);
-	//myPhysicsWorld->AddComponent(pCloth->GetComponent());
-
-	//iObject* pMainCharacter = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);	
-	//nPhysics::sBallDef characterPhysics;
-	//characterPhysics.Mass = 1.0;
-	//characterPhysics.Position = glm::vec3(30.0f, 50.0f, 0.0f);
-	//characterPhysics.Radius = 5.0f;
-	//characterPhysics.Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-	//characterPhysics.Scale = glm::vec3(0.05f, 0.05f, 0.05f);
-	//characterPhysics.Angle = 1.0f;
-	//nPhysics::iBallComponent* pCharacterPhysics = myPhysicsFactory->CreateBall(characterPhysics);
-	//g_vec_pGameComponentObjects.push_back(pCharacterPhysics);
-	//pMainCharacter->SetComponent(pCharacterPhysics);
-	//cSimpleAssimpSkinnedMesh* theSkinnedMesh = new cSimpleAssimpSkinnedMesh();
-	//pMainCharacter->setSM(theSkinnedMesh);
-	//pMainCharacter->getSM()->LoadMeshFromFile("mainCharacter", "assets/modelsFBX/RPG-Character(FBX2013).FBX");
-
-	//sModelDrawInfo* mainCharacterMeshInfo = pMainCharacter->getSM()->CreateMeshObjectFromCurrentModel();
-	//if (mainCharacterMeshInfo)
-	//{
-	//	std::cout << mainCharacterMeshInfo->numberOfVertices << " vertices" << std::endl;
-	//	std::cout << mainCharacterMeshInfo->numberOfTriangles << " triangles" << std::endl;
-	//	std::cout << mainCharacterMeshInfo->numberOfIndices << " indices" << std::endl;
-
-	//	pTheVAOManager->LoadModelDrawInfoIntoVAO(*mainCharacterMeshInfo, shaderProgID);
-	//}
-
-	//pMainCharacter->getSM()->LoadMeshAnimation("Run", "assets/modelsFBX/Run.fbx");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Walk-Slow", "assets/modelsFBX/RPG-Character_Unarmed-Walk-Slow(FBX2013).FBX");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Walk", "assets/modelsFBX/Walking.fbx");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Jump", "assets/modelsFBX/Jumping.fbx");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Fall", "assets/modelsFBX/RPG-Character_Unarmed-Fall(FBX2013).FBX");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Attack", "assets/modelsFBX/RPG-Character_Unarmed-Attack-R3(FBX2013).FBX");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Idle", "assets/modelsFBX/RPG-Character_Unarmed-Idle(FBX2013).FBX");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Dying", "assets/modelsFBX/RPG-Character_Unarmed-Death1(FBX2013).FBX");
-	//pMainCharacter->getSM()->LoadMeshAnimation("Roll", "assets/modelsFBX/Sprinting Forward Roll.fbx");
-	//pMainCharacter->setAnimation("Idle");
-	//pMainCharacter->setMeshName("mainCharacter");
-	//pMainCharacter->setFriendlyName("mainCharacter");	// We use to search
-	//pMainCharacter->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pMainCharacter->setScale(0.2f);
-	//pMainCharacter->setObjectColourRGBA(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	//pMainCharacter->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	//pMainCharacter->setVelocity(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pMainCharacter->setAccel(glm::vec3(0.0f, 0.0f, 0.0f));
-	//pMainCharacter->setInverseMass(1.0f);
-	//pMainCharacter->setIsVisible(true);
-	//pMainCharacter->setIsWireframe(false);
-	//pMainCharacter->setTexture("StoneTex_1024.bmp", 0);
-	//pMainCharacter->setTexture("grassTexture_512.bmp", 1);
-	//pMainCharacter->setTexture("sandTexture_1024.bmp", 2);
-	//pMainCharacter->setTextureRatio(1, 1);
-	//pMainCharacter->setTransprancyValue(1.0f);
-	//g_vec_pCharacterObjects.push_back(pMainCharacter);
-	//myPhysicsWorld->AddComponent(pMainCharacter->GetComponent());
-
 	// Sphere and cube
 	iObject* pSphere = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
 
-	pSphere->setMeshName("sphere");
+	pSphere->setMeshName("soccerBall");
 	pSphere->setFriendlyName("physicsSphere");	// We use to search 
 	pSphere->setPositionXYZ(glm::vec3(0.0f, 50.0f, 0.0f));
 	pSphere->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -796,27 +706,26 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pSphere->setAccel(glm::vec3(0.0f, 0.0f, 0.0f));
 	pSphere->set_SPHERE_radius(1.0f);
 	pSphere->setInverseMass(1.0f);
-	pSphere->setTexture("StoneTex_1024.bmp", 1);
+	pSphere->setTexture("SoccerBall.bmp", 1);
 	pSphere->setTextureRatio(1, 1);
-	//pSphere->SetPlaneType("floor");
 	pSphere->setTransprancyValue(1.0f);
 	pSphere->setIsVisible(true);
 	pSphere->setIsWireframe(false);
-	//pSphere->SetMassType(0);
 	nPhysics::sBallDef physicsBall;
 	physicsBall.Mass = 1.0f;
-	physicsBall.Position = glm::vec3(20.0f, 50.0f, -30.0f);
-	physicsBall.Radius = 1.0f;
+	physicsBall.Position = glm::vec3(0.0f, 50.0f, 0.0f);
+	physicsBall.Radius = 7.0f;
 	physicsBall.Angle = 1.0f;
 	physicsBall.Rotation = glm::vec3(1.0f, 1.0f, 1.0f);
 	physicsBall.Scale = glm::vec3(1.0f, 1.0f, 1.0f);
 	nPhysics::iBallComponent* pSpherePhysics = bulletPhysicsFactory->CreateBall(physicsBall);
 	g_vec_pGameComponentObjects.push_back(pSpherePhysics);
 	pSphere->SetComponent(pSpherePhysics);
-	::g_vec_pGameObjects.push_back(pSphere);
+	pSphere->SetUniqueEntityId(BallUniqueID);
+	g_vec_pGameObjects.push_back(pSphere);
 	bulletPhysicsWorld->AddComponent(pSphere->GetComponent());
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		iObject* pAnotherSphere = pFactory->CreateObject("sphere", nPhysics::eComponentType::ball);
 		float scaleRadius = randInRange(1.0f, 5.0f);
@@ -871,7 +780,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pWallLeft->setTransprancyValue(0.1f);
 	nPhysics::sPlaneDef physicsPlaneWallLeft;
 	physicsPlaneWallLeft.Normal = glm::vec3(1.0f, 0.0f, 0.0f);
-	physicsPlaneWallLeft.Position = glm::vec3(-50.0f, 0.0f, 0.0f);
+	physicsPlaneWallLeft.Position = glm::vec3(-150.0f, 0.0f, 0.0f);
 	physicsPlaneWallLeft.Constant = glm::dot(physicsPlaneWallLeft.Normal, physicsPlaneWallLeft.Position);
 	physicsPlaneWallLeft.Mass = 0.0f;
 	//nPhysics::iPlaneComponent* pWallLeftPhysics = myPhysicsFactory->CreatePlane(physicsPlaneWallLeft);
@@ -901,7 +810,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pWallRight->setTransprancyValue(0.1f);
 	nPhysics::sPlaneDef physicsPlaneWallRight;
 	physicsPlaneWallRight.Normal = glm::vec3(-1.0f, 0.0f, 0.0f);
-	physicsPlaneWallRight.Position = glm::vec3(50.0f, 0.0f, 0.0f);
+	physicsPlaneWallRight.Position = glm::vec3(150.0f, 0.0f, 0.0f);
 	physicsPlaneWallRight.Constant = glm::dot(physicsPlaneWallRight.Normal, physicsPlaneWallRight.Position);
 	physicsPlaneWallRight.Mass = 0.0f;
 	nPhysics::iPlaneComponent* pWallRightPhysics = bulletPhysicsFactory->CreatePlane(physicsPlaneWallRight);
@@ -912,9 +821,9 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	bulletPhysicsWorld->AddComponent(pWallRight->GetComponent());
 
 	iObject* pWallFront = pFactory->CreateObject("mesh", nPhysics::eComponentType::plane);
-	pWallFront->setMeshName("wallFront");
+	pWallFront->setMeshName("floor");
 	pWallFront->setFriendlyName("wallFront");	// We use to search 
-	//pFloor->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
+	pWallFront->setPositionXYZ(glm::vec3(0.0f, 0.0f, 200.0f));
 	pWallFront->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 	pWallFront->setScale(1.0f);
 	pWallFront->setObjectColourRGBA(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -923,13 +832,13 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pWallFront->setInverseMass(1.0f);
 	pWallFront->setIsVisible(false);
 	pWallFront->setIsWireframe(false);
-	pWallFront->setTexture("grassTexture_512.bmp", 1);
+	pWallFront->setTexture("green.bmp", 1);
 	pWallFront->setTextureRatio(1, 1);
 	pWallFront->SetPlaneType("floor");
 	pWallFront->setTransprancyValue(0.1f);
 	nPhysics::sPlaneDef physicsPlaneWallFront;
 	physicsPlaneWallFront.Normal = glm::vec3(0.0f, 0.0f, -1.0f);
-	physicsPlaneWallFront.Position = glm::vec3(0.0f, 0.0f, 50.0f);
+	physicsPlaneWallFront.Position = glm::vec3(0.0f, 0.0f, 200.0f);
 	physicsPlaneWallFront.Constant = glm::dot(physicsPlaneWallFront.Normal, physicsPlaneWallFront.Position);
 	physicsPlaneWallFront.Mass = 0.0f;
 	nPhysics::iPlaneComponent* pWallFrontPhysics = bulletPhysicsFactory->CreatePlane(physicsPlaneWallFront);
@@ -957,7 +866,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pWallBack->setTransprancyValue(0.1f);
 	nPhysics::sPlaneDef physicsPlaneWallBack;
 	physicsPlaneWallBack.Normal = glm::vec3(0.0f, 0.0f, 1.0f);
-	physicsPlaneWallBack.Position = glm::vec3(0.0f, 0.0f, -50.0f);
+	physicsPlaneWallBack.Position = glm::vec3(0.0f, 0.0f, -200.0f);
 	physicsPlaneWallBack.Constant = glm::dot(physicsPlaneWallBack.Normal, physicsPlaneWallBack.Position);
 	physicsPlaneWallBack.Mass = 0.0f;
 	nPhysics::iPlaneComponent* pWallBackPhysics = bulletPhysicsFactory->CreatePlane(physicsPlaneWallBack);
@@ -1012,12 +921,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pDebugSphere->setIsWireframe(true);
 	pDebugSphere->setInverseMass(0.0f);			// Sphere won't move
 	pDebugSphere->setIsVisible(false);
-	nPhysics::sBallDef physicsBallDebug;
-	physicsBallDebug.Mass = 0.0f;
-	physicsBallDebug.Position = glm::vec3(0.0f, 0.0f, 0.0f);
-	physicsBallDebug.Radius = 1.0f;
-	nPhysics::iBallComponent* pDebugPhysics = bulletPhysicsFactory->CreateBall(physicsBallDebug);
-	pDebugSphere->SetComponent(pDebugPhysics);
+	g_vec_pExtraObjects.push_back(pDebugSphere);
 
 	pDebugCube = pFactory->CreateObject("sphere", nPhysics::eComponentType::plane);
 	pDebugCube->setMeshName("cubeDebug");
@@ -1401,7 +1305,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pHinge->setTransprancyValue(1.0f);
 	nPhysics::sHingeDef physicsHinge;
 	physicsHinge.Mass = 1.0f;
-	physicsHinge.Position = glm::vec3(0.0f, 3.0f, 0.0f);
+	physicsHinge.Position = glm::vec3(50.0f, 3.0f, 0.0f);
 	physicsHinge.Height = 5.0f;
 	physicsHinge.Width = 10.0f;
 	physicsHinge.Thickness = 1.0f;
@@ -1413,23 +1317,23 @@ DWORD WINAPI LoadObjects(LPVOID params)
 
 	iObject* pHomeNet = pFactory->CreateObject("sphere", nPhysics::eComponentType::ghostBox);
 	pHomeNet->setMeshName("smallCube");
-	pHomeNet->setFriendlyName("homeNet");	// We use to search 
+	pHomeNet->setFriendlyName("homeNet");	// We use to search
 	pHomeNet->setPositionXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 	pHomeNet->setRotationXYZ(glm::vec3(0.0f, 0.0f, 0.0f));
 	float scaleNet = 20.0f;
-	pHomeNet->setScale(scaleNet);
+	pHomeNet->setScale(scaleNet * 0.5);
 	pHomeNet->setDebugColour(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	pHomeNet->setInverseMass(1.0f);
 	pHomeNet->setIsVisible(true);
 	pHomeNet->setIsWireframe(true);
 	nPhysics::sGhostBoxDef physicsGhostBox;
-	physicsGhostBox.Position = glm::vec3(0.0f, 0.0f, 0.0f);
+	physicsGhostBox.Position = glm::vec3(0.0f, 20.0f, 0.0f);
 	physicsGhostBox.Width = glm::vec3(scaleNet);
 	nPhysics::iGhostBoxComponent* pGhostBoxPhysics = bulletPhysicsFactory->CreateGhostBox(physicsGhostBox);
 	g_vec_pGameComponentObjects.push_back(pGhostBoxPhysics);
 	pHomeNet->SetComponent(pGhostBoxPhysics);
-	pHomeNet->SetUniqueEntityId(1);
-	g_vec_pGameObjects.push_back(pHomeNet);
+	pHomeNet->SetUniqueEntityId(HomeNetUniqueID);
+	g_vec_pEnvironmentObjects.push_back(pHomeNet);
 	bulletPhysicsWorld->AddComponent(pHomeNet->GetComponent());
 
 	iObject* pMainCar = pFactory->CreateObject("sphere", nPhysics::eComponentType::vehicle);
@@ -1450,7 +1354,7 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	nPhysics::sVehicleDef physicsVehicle;
 	physicsVehicle.Position = glm::vec3(0.0f, 10.0f, 15.0f);
 	physicsVehicle.Width = glm::vec3(6.0f, 2.0f, 16.0f);
-	physicsVehicle.Mass = 400.0f;
+	physicsVehicle.Mass = 300.0f;
 	
 	for (int i = 0; i < 4; i++)
 	{
@@ -1523,6 +1427,23 @@ DWORD WINAPI LoadObjects(LPVOID params)
 	pCurrentObject = pFindObjectByFriendlyName("mainCharacter");
 
 	LeaveCriticalSection(&output_lock);
+
+	g_motherOfAllVectors.push_back(g_vec_pGameObjects);
+	g_motherOfAllVectors.push_back(g_vec_pCarObjects);
+	g_motherOfAllVectors.push_back(g_vec_pWheelObjects);
+	g_motherOfAllVectors.push_back(g_vec_pEnvironmentObjects);
+	g_motherOfAllVectors.push_back(g_vec_pGameFBOObjects);
+	g_motherOfAllVectors.push_back(g_vec_pCharacterObjects);
+	g_motherOfAllVectors.push_back(g_vec_pAIEnvironmentObjects);
+	g_motherOfAllVectors.push_back(g_vec_pAIEnemyObjects);
+	g_motherOfAllVectors.push_back(g_vec_pAIGameObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlatformEnvironmentObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlatformEnemyObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlatformGameObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlatformCharacterObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlatformExplosionObjects);
+	g_motherOfAllVectors.push_back(g_vec_pExplosionObjects);
+	g_motherOfAllVectors.push_back(g_vec_pPlaceHolderObjects);
 
 	return 0;
 }
