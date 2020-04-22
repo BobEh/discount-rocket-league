@@ -1,4 +1,7 @@
-WASD for camera.
-'ctrl' + WASD to move ball.
+# discount-rocket-league
 
-Run on Release x64 ( works on debug but it's super slow ).
+WASD - fly camera
+
+'ctrl' + WASD - control car
+'ctrl' + SPACE - jump
+'ctrl' + B - boost
